@@ -60,6 +60,9 @@
       --shadow-soft: 0 10px 18px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.35);
     }
 
+    /* Global layout helpers */
+    *, *::before, *::after{ box-sizing: border-box; }
+
     /* Viewport preview switch */
     :root[data-vw="desktop"]{ --fs-h1: var(--fs-h1-d); --fs-h2: var(--fs-h2-d); --fs-h3: var(--fs-h3-d); --fs-body: var(--fs-body-d); }
     :root[data-vw="mobile"]{ --fs-h1: var(--fs-h1-m); --fs-h2: var(--fs-h2-m); --fs-h3: var(--fs-h3-m); --fs-body: var(--fs-body-m); }
@@ -133,12 +136,13 @@
     .footer{margin:40px 0 20px; text-align:center; color: var(--color-muted); font-size:12px}
 
     /* Tuner */
-    .tuner-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--gap); margin-top:10px}
-    .tuner-item{background: var(--color-brand-surface); border:1px solid var(--color-mid); border-radius:12px; padding:12px}
+    .tuner-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--gap); margin-top:10px; align-items:stretch}
+    .tuner-item{background: var(--color-brand-surface); border:1px solid var(--color-mid); border-radius:12px; padding:12px; overflow:hidden}
     .tuner-item label{display:block; font-size:12px; color:var(--color-muted); margin-bottom:6px}
-    .tuner-row{display:flex; align-items:center; gap:10px}
-    .tuner-row input[type="text"], .tuner-row select{flex:1; background:#0f0f0f; color:#fff; border:1px solid var(--color-mid); border-radius:8px; padding:8px}
-    .tuner-row input[type="color"]{width:42px; height:34px; background:transparent; border:0; padding:0}
+    .tuner-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; width:100%}
+    .tuner-row > *{min-width:0; max-width:100%}
+    .tuner-row input[type="text"], .tuner-row select{flex:1 1 160px; width:100%; background:#0f0f0f; color:#fff; border:1px solid var(--color-mid); border-radius:8px; padding:8px}
+    .tuner-row input[type="color"]{flex:0 0 42px; width:42px; height:34px; background:transparent; border:0; padding:0}
     .tuner-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
     .btn.secondary{background:#0f0f0f; color:#fff; border:1px solid var(--color-mid)}
 
@@ -552,7 +556,7 @@
       ['Iansui', new Set()],
     ]);
 
-    function gfName(name){ return (name||'').trim().replace(new RegExp('\\s+','g'), '+'); }
+    function gfName(name){ return (name||'').trim().replace(new RegExp('\s+','g'), '+'); }
 
     function buildGFontsURL(){
       const families = [];
@@ -625,7 +629,7 @@
 
     inputs.addFamily.addEventListener('click', ()=>{
       const name = inputs.customFamily.value.trim();
-      const weights = (inputs.customWeights.value||'').split(new RegExp('\\s*;\\s*|\\s*,\\s*')).filter(Boolean);
+      const weights = (inputs.customWeights.value||'').split(new RegExp('\s*;\s*|\s*,\s*')).filter(Boolean);
       addOrUpdateFamily(name, weights);
       inputs.customFamily.value=''; inputs.customWeights.value='';
     });
