@@ -37,6 +37,20 @@
       --grad-purple: linear-gradient(90deg,#7E22CE,#C084FC);
       --grad-gold-v1: linear-gradient(90deg,#C08400,#FACC15);
 
+      /* Tipografía – tokens */
+      --font-heading: "Alan Sans", ui-sans-serif, system-ui;
+      --font-ui: "Montserrat", ui-sans-serif, system-ui;
+      --font-deco: "Solitreo", cursive;
+      --fw-heading: 800; /* 700/800 sugerido */
+      --fw-body: 400;    /* 400/500/600/700 */
+      --lh-heading: 1.15; /* LH = line-height */
+      --lh-body: 1.5;
+      /* Escala (Desktop / Mobile) */
+      --fs-h1-d: 56px; --fs-h1-m: 34px; /* 52–60 / 32–36 */
+      --fs-h2-d: 36px; --fs-h2-m: 26px; /* 32–40 / 24–28 */
+      --fs-h3-d: 26px; --fs-h3-m: 19px; /* 24–28 / 18–20 */
+      --fs-body-d: 17px; --fs-body-m: 15px; /* 16–18 / 14–16 */
+
       /* Layout tokens */
       --radius-xl: 16px;
       --radius-lg: 12px;
@@ -46,22 +60,26 @@
       --shadow-soft: 0 10px 18px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.35);
     }
 
+    /* Viewport preview switch */
+    :root[data-vw="desktop"]{ --fs-h1: var(--fs-h1-d); --fs-h2: var(--fs-h2-d); --fs-h3: var(--fs-h3-d); --fs-body: var(--fs-body-d); }
+    :root[data-vw="mobile"]{ --fs-h1: var(--fs-h1-m); --fs-h2: var(--fs-h2-m); --fs-h3: var(--fs-h3-m); --fs-body: var(--fs-body-m); }
+
     html, body { height: 100%; }
     body{
       margin:0;
       background: radial-gradient(1200px 800px at 10% -10%, rgba(201,165,0,.08), transparent 40%), var(--color-brand-black);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: var(--font-ui);
       color: var(--color-white);
       letter-spacing:.2px;
     }
 
     .container{max-width:1200px; margin: 40px auto; padding: 0 20px;}
 
-    .title{font-size: 28px; font-weight: 900; margin:0 0 8px; background: var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent;}
+    .title{font-size: 28px; font-weight: 900; margin:0 0 8px; background: var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent; font-family: var(--font-heading)}
     .subtitle{color: var(--color-muted); margin:0 0 24px}
 
     .section{margin-top: 34px}
-    .section h2{font-size:20px; margin:0 0 12px; color: var(--color-gold)}
+    .section h2{font-size:20px; margin:0 0 12px; color: var(--color-gold); font-family: var(--font-heading); font-weight: var(--fw-heading)}
 
     .grid{display:grid; grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); gap: var(--gap);}
 
@@ -73,7 +91,7 @@
 
     .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
 
-    .btn{appearance:none; border:0; border-radius: 10px; padding:10px 12px; cursor:pointer; font-weight:800}
+    .btn{appearance:none; border:0; border-radius: 10px; padding:10px 12px; cursor:pointer; font-weight:800; text-transform: uppercase}
     .btn.copy{background:#0f0f0f; color:var(--color-muted); border:1px solid var(--color-mid)}
     .btn.copy:hover{filter: brightness(1.08)}
 
@@ -83,7 +101,7 @@
     .input{width:100%; background:#0f0f0f; color:var(--color-white); border:1px solid var(--color-mid); padding:10px 12px; border-radius:10px}
     .input::placeholder{color:#7d7d7d}
 
-    .cta{background: var(--grad-gold); color:#120d00; box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset}
+    .cta{background: var(--grad-gold); color:#120d00; box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset; font-family: var(--font-ui); font-weight: 800}
     .cta:hover{filter:brightness(1.06)}
 
     .link{font-weight:800; text-decoration:none; background: var(--grad-gold-soft); -webkit-background-clip:text; background-clip:text; color:transparent}
@@ -119,16 +137,27 @@
     .tuner-item{background: var(--color-brand-surface); border:1px solid var(--color-mid); border-radius:12px; padding:12px}
     .tuner-item label{display:block; font-size:12px; color:var(--color-muted); margin-bottom:6px}
     .tuner-row{display:flex; align-items:center; gap:10px}
-    .tuner-row input[type="text"]{flex:1; background:#0f0f0f; color:#fff; border:1px solid var(--color-mid); border-radius:8px; padding:8px}
+    .tuner-row input[type="text"], .tuner-row select{flex:1; background:#0f0f0f; color:#fff; border:1px solid var(--color-mid); border-radius:8px; padding:8px}
     .tuner-row input[type="color"]{width:42px; height:34px; background:transparent; border:0; padding:0}
     .tuner-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
     .btn.secondary{background:#0f0f0f; color:#fff; border:1px solid var(--color-mid)}
+
+    /* Tipografía */
+    h1.demo, h2.demo, h3.demo { font-family: var(--font-heading); font-weight: var(--fw-heading); line-height: var(--lh-heading); margin: 6px 0; }
+    h1.demo{ font-size: var(--fs-h1); }
+    h2.demo{ font-size: var(--fs-h2); }
+    h3.demo{ font-size: var(--fs-h3); }
+    p.demo{ font-family: var(--font-ui); font-weight: var(--fw-body); line-height: var(--lh-body); font-size: var(--fs-body); margin: 6px 0; }
+    .banner-deco{ font-family: var(--font-deco); font-size: clamp(24px, 5vw, 40px); letter-spacing:.5px; background: var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700 }
+
+    /* Accesibilidad */
+    :focus-visible{ outline: 2px dashed var(--color-gold); outline-offset: 3px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1 class="title">Paleta Negro & Dorado</h1>
-    <p class="subtitle">Identidad principal centrada en negro y dorado. Incluye ejemplos UI, degradados oro y los degradados de la primera paleta (verde, azul, púrpura y dorado v1). Además, un "Tuner" para ajustar variables y degradados en vivo.</p>
+    <p class="subtitle">Identidad principal centrada en negro y dorado. Incluye ejemplos UI, degradados oro y los degradados de la primera paleta (verde, azul, púrpura y dorado v1). Además, un "Tuner" para ajustar variables y degradados en vivo. <strong>LH</strong> = <em>line-height</em>.</p>
 
     <!-- Swatches -->
     <div class="grid" id="swatches"></div>
@@ -153,6 +182,140 @@
         <div class="card"><div class="swatch g purple"></div><div class="content"><div class="token">--grad-purple</div><div class="meta">linear-gradient(90deg,#7E22CE,#C084FC)</div><div class="row"><button class="btn copy" data-copy="var(--grad-purple)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g gold-v1"></div><div class="content"><div class="token">--grad-gold-v1</div><div class="meta">linear-gradient(90deg,#C08400,#FACC15)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-v1)">Copiar variable</button></div></div></div>
       </div>
+    </div>
+
+    <!-- Tipografía -->
+    <div class="section">
+      <h2>Tipografía (Google Fonts)</h2>
+      <div class="grid">
+        <div class="panel">
+          <div class="soft">Vista previa</div>
+          <h1 class="demo">H1 (Hero / Promo) – ¡Gana en grande!</h1>
+          <h2 class="demo">H2 (Sección) – Próximos eventos</h2>
+          <h3 class="demo">H3 (Tarjeta) – Jackpot semanal</h3>
+          <p class="demo">Body – Montserrat Regular. Este texto sirve para evaluar legibilidad en UI (mínimo 16px, alto contraste, <em>focus visible</em>).</p>
+          <div class="banner-deco" aria-label="Decorativa">Campaña exclusiva • Bono Dorado</div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn cta">CTA / Botón</button>
+            <a href="#" class="link">Link de prueba</a>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="soft">Escala sugerida</div>
+          <div style="overflow:auto">
+            <table style="width:100%; border-collapse:collapse; font-size:13px">
+              <thead>
+                <tr style="color:var(--color-muted)">
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Elemento</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Familia / Peso</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Desktop</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Mobile</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Nota</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:6px">H1 (Hero/Promo)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">52–60px</td><td style="padding:6px">32–36px</td><td style="padding:6px">LH 1.1–1.2</td></tr>
+                <tr><td style="padding:6px">H2 (Sección)</td><td style="padding:6px">Montserrat <strong>Bold</strong></td><td style="padding:6px">32–40px</td><td style="padding:6px">24–28px</td><td style="padding:6px"></td></tr>
+                <tr><td style="padding:6px">H3 (Tarjeta)</td><td style="padding:6px">Montserrat <strong>SemiBold</strong></td><td style="padding:6px">24–28px</td><td style="padding:6px">18–20px</td><td style="padding:6px"></td></tr>
+                <tr><td style="padding:6px">Body</td><td style="padding:6px">Montserrat <strong>Regular</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">14–16px</td><td style="padding:6px"><strong>LH 1.5</strong></td></tr>
+                <tr><td style="padding:6px">CTA/Botón</td><td style="padding:6px">Montserrat <strong>Bold</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">16–18px</td><td style="padding:6px">MAYÚSCULAS</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="soft" style="margin-top:8px">*Puedes alternar entre vista <span class="kbd">desktop</span> y <span class="kbd">mobile</span> para ver el efecto.</div>
+        </div>
+      </div>
+
+      <!-- Typo Tuner -->
+      <div class="tuner-grid" style="margin-top:10px">
+        <div class="tuner-item">
+          <label>Familia encabezados (Heading)</label>
+          <div class="tuner-row">
+            <input list="font-suggestions" id="fontHeading" class="tuner-text" value="Alan Sans" />
+            <select id="fwHeading" class="tuner-text">
+              <option value="700">700</option>
+              <option value="800" selected>800</option>
+            </select>
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Familia UI / Body</label>
+          <div class="tuner-row">
+            <input list="font-suggestions" id="fontBody" class="tuner-text" value="Montserrat" />
+            <select id="fwBody" class="tuner-text">
+              <option value="400" selected>400</option>
+              <option value="500">500</option>
+              <option value="600">600</option>
+              <option value="700">700</option>
+            </select>
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Decorativa (campañas)</label>
+          <div class="tuner-row">
+            <input list="font-suggestions" id="fontDeco" class="tuner-text" value="Solitreo" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Line-height (LH) encabezados / body</label>
+          <div class="tuner-row">
+            <input type="text" id="lhHeading" class="tuner-text" value="1.15" />
+            <input type="text" id="lhBody" class="tuner-text" value="1.5" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Tamaños Desktop (H1/H2/H3/Body)</label>
+          <div class="tuner-row">
+            <input type="text" id="fsH1D" class="tuner-text" value="56px" />
+            <input type="text" id="fsH2D" class="tuner-text" value="36px" />
+            <input type="text" id="fsH3D" class="tuner-text" value="26px" />
+            <input type="text" id="fsBodyD" class="tuner-text" value="17px" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Tamaños Mobile (H1/H2/H3/Body)</label>
+          <div class="tuner-row">
+            <input type="text" id="fsH1M" class="tuner-text" value="34px" />
+            <input type="text" id="fsH2M" class="tuner-text" value="26px" />
+            <input type="text" id="fsH3M" class="tuner-text" value="19px" />
+            <input type="text" id="fsBodyM" class="tuner-text" value="15px" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Vista previa</label>
+          <div class="tuner-row">
+            <select id="vwSwitch" class="tuner-text">
+              <option value="desktop" selected>Desktop</option>
+              <option value="mobile">Mobile</option>
+            </select>
+            <button class="btn secondary" id="applyRecommended">Aplicar escala sugerida</button>
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Añadir familia personalizada (Google Fonts)</label>
+          <div class="tuner-row">
+            <input type="text" id="customFamily" class="tuner-text" placeholder="Ej: Poppins" />
+            <input type="text" id="customWeights" class="tuner-text" placeholder="Pesos: 400;500;700" />
+            <button class="btn secondary" id="addFamily">Añadir</button>
+          </div>
+        </div>
+      </div>
+      <div class="tuner-actions">
+        <button class="btn cta" id="exportCSS">Exportar CSS</button>
+      </div>
+
+      <datalist id="font-suggestions">
+        <option value="Alan Sans"></option>
+        <option value="Montserrat"></option>
+        <option value="Solitreo"></option>
+        <option value="Iansui"></option>
+        <option value="Alumni Sans"></option>
+        <option value="Bebas Neue"></option>
+        <option value="Oswald"></option>
+        <option value="Poppins"></option>
+        <option value="Inter"></option>
+        <option value="Roboto"></option>
+      </datalist>
     </div>
 
     <!-- Playground / usage examples -->
@@ -180,8 +343,8 @@
           <div class="card-demo" style="margin-top:8px">
             <div class="head"></div>
             <div class="body">
-              <div style="font-weight:900; letter-spacing:.3px">Jackpot Semanal</div>
-              <div class="soft">Premio acumulado</div>
+              <div style="font-weight:900; letter-spacing:.3px; font-family: var(--font-heading); line-height: var(--lh-heading); font-size: var(--fs-h2)">Jackpot Semanal</div>
+              <div class="soft" style="font-family: var(--font-ui); line-height: var(--lh-body); font-size: var(--fs-body)">Premio acumulado</div>
               <div class="money">$1,250,000</div>
             </div>
           </div>
@@ -189,13 +352,11 @@
       </div>
     </div>
 
-    <!-- Theme Tuner -->
+    <!-- Theme Tuner (colores & degradados) -->
     <div class="section">
       <h2>Ajustador dinámico (Tuner)</h2>
       <p class="soft">Modifica colores y degradados en vivo. Útil para probar otras tonalidades (p. ej., oro más cálido o negros más fríos). Puedes exportar el tema a JSON.</p>
-      <div class="tuner-grid" id="tunerColors">
-        <!-- items generados por JS -->
-      </div>
+      <div class="tuner-grid" id="tunerColors"></div>
       <div class="tuner-grid" id="tunerGradients" style="margin-top:10px"></div>
       <div class="tuner-actions">
         <button class="btn secondary" id="resetTheme">Restablecer</button>
@@ -206,7 +367,14 @@
     <div class="footer">© CasinoOnline UI • Paleta Negro & Dorado con Tuner</div>
   </div>
 
+  <!-- Google Fonts dynamic link will be injected here -->
+
   <script>
+    // Utility to read CSS vars
+    function cssVar(name){
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
     // === SWATCHES ===
     const TOKENS = [
       { name: '--color-brand-black', usage: 'Fondo global (negro)' },
@@ -225,10 +393,6 @@
     ];
 
     const swatches = document.getElementById('swatches');
-
-    function cssVar(name){
-      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    }
 
     function appropriateTextColor(hex){
       const c = (hex||'').replace('#','');
@@ -277,7 +441,7 @@
       }).catch(()=>{ alert('No se pudo copiar'); })
     })
 
-    // === THEME TUNER ===
+    // === THEME TUNER (colores & degradados) ===
     const colorVars = ['--color-brand-black','--color-brand-surface','--color-white','--color-gold','--color-gold-600','--color-gold-700','--color-gold-800','--color-green','--color-blue','--color-purple','--color-red'];
     const gradientVars = ['--grad-gold','--grad-gold-soft','--grad-gold-angled','--grad-black-gold','--grad-green','--grad-blue','--grad-purple','--grad-gold-v1'];
 
@@ -289,7 +453,7 @@
 
     function hexOrEmpty(val){ return /^#([0-9a-f]{3}){1,2}$/i.test(val)? val : '' }
 
-    function renderTuner(){
+    function renderColorTuner(){
       tunerColors.innerHTML = '';
       colorVars.forEach(v =>{
         const value = cssVar(v);
@@ -337,13 +501,13 @@
       }
     });
 
-    document.getElementById('resetTheme').addEventListener('click', ()=>{
+    document.getElementById('resetTheme')?.addEventListener('click', ()=>{
       Object.entries(initialTheme).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
       renderSwatches();
-      renderTuner();
+      renderColorTuner();
     });
 
-    document.getElementById('exportTheme').addEventListener('click', ()=>{
+    document.getElementById('exportTheme')?.addEventListener('click', ()=>{
       const out = {};
       [...colorVars, ...gradientVars].forEach(v => out[v] = cssVar(v));
       const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
@@ -353,9 +517,164 @@
       URL.revokeObjectURL(url);
     });
 
-    // Init
+    // Init colors
     renderSwatches();
-    renderTuner();
+    renderColorTuner();
+
+    // === TYPOGRAPHY LOADER / TUNER ===
+    const linkId = 'gfonts-link';
+    const vwSwitch = document.getElementById('vwSwitch');
+    const applyRecommended = document.getElementById('applyRecommended');
+    const exportCSS = document.getElementById('exportCSS');
+
+    const inputs = {
+      heading: document.getElementById('fontHeading'),
+      fwHeading: document.getElementById('fwHeading'),
+      body: document.getElementById('fontBody'),
+      fwBody: document.getElementById('fwBody'),
+      deco: document.getElementById('fontDeco'),
+      lhHeading: document.getElementById('lhHeading'),
+      lhBody: document.getElementById('lhBody'),
+      fsH1D: document.getElementById('fsH1D'), fsH1M: document.getElementById('fsH1M'),
+      fsH2D: document.getElementById('fsH2D'), fsH2M: document.getElementById('fsH2M'),
+      fsH3D: document.getElementById('fsH3D'), fsH3M: document.getElementById('fsH3M'),
+      fsBodyD: document.getElementById('fsBodyD'), fsBodyM: document.getElementById('fsBodyM'),
+      customFamily: document.getElementById('customFamily'),
+      customWeights: document.getElementById('customWeights'),
+      addFamily: document.getElementById('addFamily')
+    };
+
+    // Families config → { name: Set(weights) }
+    const fonts = new Map([
+      ['Alan Sans', new Set([700,800])],
+      ['Montserrat', new Set([400,500,600,700])],
+      ['Solitreo', new Set()],
+      ['Iansui', new Set()],
+    ]);
+
+    function gfName(name){ return (name||'').trim().replace(new RegExp('\\s+','g'), '+'); }
+
+    function buildGFontsURL(){
+      const families = [];
+      fonts.forEach((weights, name)=>{
+        if(!name) return;
+        const w = [...weights].sort().join(';');
+        families.push(`family=${gfName(name)}${w?`:wght@${w}`:''}`);
+      });
+      if(!families.length) return '';
+      return `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`;
+    }
+
+    function ensureGFontsLink(){
+      let link = document.getElementById(linkId);
+      const href = buildGFontsURL();
+      if(!href) return;
+      if(!link){
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.id = linkId;
+        document.head.appendChild(link);
+      }
+      link.href = href;
+    }
+
+    function applyFontVars(){
+      document.documentElement.style.setProperty('--font-heading', `'${inputs.heading.value}', ui-sans-serif, system-ui`);
+      document.documentElement.style.setProperty('--font-ui', `'${inputs.body.value}', ui-sans-serif, system-ui`);
+      document.documentElement.style.setProperty('--font-deco', `'${inputs.deco.value}', cursive`);
+      document.documentElement.style.setProperty('--fw-heading', inputs.fwHeading.value);
+      document.documentElement.style.setProperty('--fw-body', inputs.fwBody.value);
+      document.documentElement.style.setProperty('--lh-heading', inputs.lhHeading.value);
+      document.documentElement.style.setProperty('--lh-body', inputs.lhBody.value);
+      document.documentElement.style.setProperty('--fs-h1-d', inputs.fsH1D.value);
+      document.documentElement.style.setProperty('--fs-h1-m', inputs.fsH1M.value);
+      document.documentElement.style.setProperty('--fs-h2-d', inputs.fsH2D.value);
+      document.documentElement.style.setProperty('--fs-h2-m', inputs.fsH2M.value);
+      document.documentElement.style.setProperty('--fs-h3-d', inputs.fsH3D.value);
+      document.documentElement.style.setProperty('--fs-h3-m', inputs.fsH3M.value);
+      document.documentElement.style.setProperty('--fs-body-d', inputs.fsBodyD.value);
+      document.documentElement.style.setProperty('--fs-body-m', inputs.fsBodyM.value);
+    }
+
+    function addOrUpdateFamily(name, weightsArray){
+      if(!name) return;
+      if(!fonts.has(name)) fonts.set(name, new Set());
+      const set = fonts.get(name);
+      (weightsArray||[]).forEach(w => { const n = parseInt(w,10); if(!isNaN(n)) set.add(n); });
+      ensureGFontsLink();
+    }
+
+    // Listeners
+    ['change','input'].forEach(ev =>{
+      inputs.heading.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.heading.value, [inputs.fwHeading.value]); applyFontVars(); });
+      inputs.fwHeading.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.heading.value, [inputs.fwHeading.value]); applyFontVars(); });
+      inputs.body.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.body.value, [inputs.fwBody.value]); applyFontVars(); });
+      inputs.fwBody.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.body.value, [inputs.fwBody.value]); applyFontVars(); });
+      inputs.deco.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.deco.value, []); applyFontVars(); });
+      inputs.lhHeading.addEventListener(ev, applyFontVars);
+      inputs.lhBody.addEventListener(ev, applyFontVars);
+      inputs.fsH1D.addEventListener(ev, applyFontVars);
+      inputs.fsH1M.addEventListener(ev, applyFontVars);
+      inputs.fsH2D.addEventListener(ev, applyFontVars);
+      inputs.fsH2M.addEventListener(ev, applyFontVars);
+      inputs.fsH3D.addEventListener(ev, applyFontVars);
+      inputs.fsH3M.addEventListener(ev, applyFontVars);
+      inputs.fsBodyD.addEventListener(ev, applyFontVars);
+      inputs.fsBodyM.addEventListener(ev, applyFontVars);
+    });
+
+    inputs.addFamily.addEventListener('click', ()=>{
+      const name = inputs.customFamily.value.trim();
+      const weights = (inputs.customWeights.value||'').split(new RegExp('\\s*;\\s*|\\s*,\\s*')).filter(Boolean);
+      addOrUpdateFamily(name, weights);
+      inputs.customFamily.value=''; inputs.customWeights.value='';
+    });
+
+    applyRecommended?.addEventListener('click', ()=>{
+      inputs.fsH1D.value = '56px'; inputs.fsH1M.value = '34px';
+      inputs.fsH2D.value = '36px'; inputs.fsH2M.value = '26px';
+      inputs.fsH3D.value = '26px'; inputs.fsH3M.value = '19px';
+      inputs.fsBodyD.value = '17px'; inputs.fsBodyM.value = '15px';
+      inputs.lhHeading.value = '1.15'; inputs.lhBody.value = '1.5';
+      applyFontVars();
+    });
+
+    vwSwitch?.addEventListener('change', ()=>{
+      document.documentElement.setAttribute('data-vw', vwSwitch.value);
+    });
+
+    exportCSS?.addEventListener('click', ()=>{
+      const href = document.getElementById(linkId)?.href || buildGFontsURL();
+      const css = `@import url('${href}');
+
+:root{
+  --font-heading: '${inputs.heading.value}', ui-sans-serif, system-ui;
+  --font-ui: '${inputs.body.value}', ui-sans-serif, system-ui;
+  --font-deco: '${inputs.deco.value}', cursive;
+  --fw-heading: ${inputs.fwHeading.value};
+  --fw-body: ${inputs.fwBody.value};
+  --lh-heading: ${inputs.lhHeading.value};
+  --lh-body: ${inputs.lhBody.value};
+  --fs-h1-d: ${inputs.fsH1D.value}; --fs-h1-m: ${inputs.fsH1M.value};
+  --fs-h2-d: ${inputs.fsH2D.value}; --fs-h2-m: ${inputs.fsH2M.value};
+  --fs-h3-d: ${inputs.fsH3D.value}; --fs-h3-m: ${inputs.fsH3M.value};
+  --fs-body-d: ${inputs.fsBodyD.value}; --fs-body-m: ${inputs.fsBodyM.value};
+}`;
+      const blob = new Blob([css], {type:'text/css'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'typography.css'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Initial setup
+    document.documentElement.setAttribute('data-vw','desktop');
+    addOrUpdateFamily('Alan Sans', [700,800]);
+    addOrUpdateFamily('Montserrat', [400,500,600,700]);
+    addOrUpdateFamily('Solitreo', []);
+    addOrUpdateFamily('Iansui', []);
+    ensureGFontsLink();
+    applyFontVars();
   </script>
 </body>
 </html>
