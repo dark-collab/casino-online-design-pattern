@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CasinoOnline – Paleta Negro & Dorado</title>
+  <style>
+    :root{
+      /* Identidad principal */
+      --color-brand-black: #0B0B0B; /* Fondo global */
+      --color-brand-surface: #151515; /* Superficies, tarjetas */
+      --color-white: #FFFFFF; /* Texto primario */
+
+      /* Oro */
+      --color-gold: #FFD700; /* Dorado principal */
+      --color-gold-600: #E6C200; /* Dorado intenso */
+      --color-gold-700: #C9A500; /* Dorado oscuro */
+      --color-gold-800: #9C7A00; /* Dorado profundo */
+
+      /* Secundarios / soporte */
+      --color-muted: #A1A1A1; /* Texto secundario */
+      --color-mid: #2B2B2B; /* Bordes sutiles */
+      --color-green: #22C55E; /* CTA/éxito */
+      --color-blue: #2563EB; /* Info/links */
+      --color-purple: #9333EA; /* VIP */
+      --color-red: #DC2626; /* Error */
+
+      /* Gradientes Oro actuales */
+      --grad-gold: linear-gradient(90deg, var(--color-gold-700), var(--color-gold));
+      --grad-gold-soft: linear-gradient(135deg, #B08D18, #FFE680);
+      --grad-gold-angled: linear-gradient(120deg, #4A3A0A, #B08D18 35%, #FFE680 70%, #C9A500);
+      --grad-black-gold: linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%);
+
+      /* Degradados de la 1ª paleta (incluidos) */
+      --grad-green: linear-gradient(90deg,#16A34A,#4ADE80);
+      --grad-blue: linear-gradient(90deg,#1D4ED8,#60A5FA);
+      --grad-purple: linear-gradient(90deg,#7E22CE,#C084FC);
+      --grad-gold-v1: linear-gradient(90deg,#C08400,#FACC15);
+
+      /* Layout tokens */
+      --radius-xl: 16px;
+      --radius-lg: 12px;
+      --radius-md: 10px;
+      --gap: 14px;
+      --shadow: 0 14px 28px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.35);
+      --shadow-soft: 0 10px 18px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.35);
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(201,165,0,.08), transparent 40%), var(--color-brand-black);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--color-white);
+      letter-spacing:.2px;
+    }
+
+    .container{max-width:1200px; margin: 40px auto; padding: 0 20px;}
+
+    .title{font-size: 28px; font-weight: 900; margin:0 0 8px; background: var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent;}
+    .subtitle{color: var(--color-muted); margin:0 0 24px}
+
+    .section{margin-top: 34px}
+    .section h2{font-size:20px; margin:0 0 12px; color: var(--color-gold)}
+
+    .grid{display:grid; grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); gap: var(--gap);}
+
+    .card{background: var(--color-brand-surface); border: 1px solid var(--color-mid); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-soft)}
+    .swatch{height:110px; display:flex; align-items:flex-end; justify-content:space-between; padding:10px}
+    .content{padding: 14px 14px 12px;}
+    .token{font-weight:800; font-size:14px}
+    .meta{color: var(--color-muted); font-size: 12px; margin-top:6px}
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+
+    .btn{appearance:none; border:0; border-radius: 10px; padding:10px 12px; cursor:pointer; font-weight:800}
+    .btn.copy{background:#0f0f0f; color:var(--color-muted); border:1px solid var(--color-mid)}
+    .btn.copy:hover{filter: brightness(1.08)}
+
+    /* Playground */
+    .panel{background: var(--color-brand-surface); padding:16px; border-radius: var(--radius-lg); border:1px solid var(--color-mid)}
+    .soft{color: var(--color-muted)}
+    .input{width:100%; background:#0f0f0f; color:var(--color-white); border:1px solid var(--color-mid); padding:10px 12px; border-radius:10px}
+    .input::placeholder{color:#7d7d7d}
+
+    .cta{background: var(--grad-gold); color:#120d00; box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset}
+    .cta:hover{filter:brightness(1.06)}
+
+    .link{font-weight:800; text-decoration:none; background: var(--grad-gold-soft); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .link:hover{text-decoration:underline}
+
+    .badge{display:inline-block; font-weight:900; padding:6px 10px; border-radius:999px; background: var(--grad-black-gold); color:#fff; border:1px solid rgba(255,255,255,.06)}
+
+    .alert{border-left: 6px solid var(--color-red); background: #2a1212; color:#ffdede; padding:12px; border-radius: var(--radius-md)}
+
+    .card-demo{background:#0f0f0f; border:1px solid var(--color-mid); border-radius: var(--radius-lg); overflow:hidden}
+    .card-demo .head{height:90px; background: var(--grad-gold-angled)}
+    .card-demo .body{padding:12px}
+
+    .money{margin-top:8px; font-size:24px; font-weight:900; background: var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+    /* Gradient cards */
+    .g{height:100px; border-radius: var(--radius-lg); box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.06)}
+    .g.gold{background: var(--grad-gold)}
+    .g.gold-soft{background: var(--grad-gold-soft)}
+    .g.gold-angled{background: var(--grad-gold-angled)}
+    .g.black-gold{background: var(--grad-black-gold)}
+    .g.green{background: var(--grad-green)}
+    .g.blue{background: var(--grad-blue)}
+    .g.purple{background: var(--grad-purple)}
+    .g.gold-v1{background: var(--grad-gold-v1)}
+
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#0f0f0f; border:1px solid var(--color-mid); padding:2px 6px; border-radius:6px; font-size:12px}
+
+    .footer{margin:40px 0 20px; text-align:center; color: var(--color-muted); font-size:12px}
+
+    /* Tuner */
+    .tuner-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--gap); margin-top:10px}
+    .tuner-item{background: var(--color-brand-surface); border:1px solid var(--color-mid); border-radius:12px; padding:12px}
+    .tuner-item label{display:block; font-size:12px; color:var(--color-muted); margin-bottom:6px}
+    .tuner-row{display:flex; align-items:center; gap:10px}
+    .tuner-row input[type="text"]{flex:1; background:#0f0f0f; color:#fff; border:1px solid var(--color-mid); border-radius:8px; padding:8px}
+    .tuner-row input[type="color"]{width:42px; height:34px; background:transparent; border:0; padding:0}
+    .tuner-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn.secondary{background:#0f0f0f; color:#fff; border:1px solid var(--color-mid)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Paleta Negro & Dorado</h1>
+    <p class="subtitle">Identidad principal centrada en negro y dorado. Incluye ejemplos UI, degradados oro y los degradados de la primera paleta (verde, azul, púrpura y dorado v1). Además, un "Tuner" para ajustar variables y degradados en vivo.</p>
+
+    <!-- Swatches -->
+    <div class="grid" id="swatches"></div>
+
+    <!-- Gradients actuales (Oro) -->
+    <div class="section">
+      <h2>Degradados Oro</h2>
+      <div class="grid">
+        <div class="card"><div class="swatch g gold"></div><div class="content"><div class="token">--grad-gold</div><div class="meta">linear-gradient(90deg, var(--color-gold-700), var(--color-gold))</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g gold-soft"></div><div class="content"><div class="token">--grad-gold-soft</div><div class="meta">linear-gradient(135deg, #B08D18, #FFE680)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-soft)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g gold-angled"></div><div class="content"><div class="token">--grad-gold-angled</div><div class="meta">linear-gradient(120deg, #4A3A0A, #B08D18 35%, #FFE680 70%, #C9A500)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-angled)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g black-gold"></div><div class="content"><div class="token">--grad-black-gold</div><div class="meta">linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%)</div><div class="row"><button class="btn copy" data-copy="var(--grad-black-gold)">Copiar variable</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- Gradients de la paleta original -->
+    <div class="section">
+      <h2>Degradados – Paleta original</h2>
+      <div class="grid">
+        <div class="card"><div class="swatch g green"></div><div class="content"><div class="token">--grad-green</div><div class="meta">linear-gradient(90deg,#16A34A,#4ADE80)</div><div class="row"><button class="btn copy" data-copy="var(--grad-green)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g blue"></div><div class="content"><div class="token">--grad-blue</div><div class="meta">linear-gradient(90deg,#1D4ED8,#60A5FA)</div><div class="row"><button class="btn copy" data-copy="var(--grad-blue)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g purple"></div><div class="content"><div class="token">--grad-purple</div><div class="meta">linear-gradient(90deg,#7E22CE,#C084FC)</div><div class="row"><button class="btn copy" data-copy="var(--grad-purple)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g gold-v1"></div><div class="content"><div class="token">--grad-gold-v1</div><div class="meta">linear-gradient(90deg,#C08400,#FACC15)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-v1)">Copiar variable</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- Playground / usage examples -->
+    <div class="section">
+      <h2>Ejemplos de uso</h2>
+      <div class="grid">
+        <div class="panel">
+          <div class="soft">Botones & Links</div>
+          <div class="row" style="margin-top:8px">
+            <button class="btn cta">Depositar</button>
+            <a href="#" class="link">Ver evento en vivo</a>
+            <span class="badge">VIP</span>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="soft">Formulario</div>
+          <input class="input" placeholder="Buscar partido o casino" />
+        </div>
+        <div class="panel">
+          <div class="soft">Alerta</div>
+          <div class="alert" style="margin-top:8px">Saldo insuficiente. <span style="color:#fff">Deposite</span> para continuar.</div>
+        </div>
+        <div class="panel">
+          <div class="soft">Card Jackpot</div>
+          <div class="card-demo" style="margin-top:8px">
+            <div class="head"></div>
+            <div class="body">
+              <div style="font-weight:900; letter-spacing:.3px">Jackpot Semanal</div>
+              <div class="soft">Premio acumulado</div>
+              <div class="money">$1,250,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme Tuner -->
+    <div class="section">
+      <h2>Ajustador dinámico (Tuner)</h2>
+      <p class="soft">Modifica colores y degradados en vivo. Útil para probar otras tonalidades (p. ej., oro más cálido o negros más fríos). Puedes exportar el tema a JSON.</p>
+      <div class="tuner-grid" id="tunerColors">
+        <!-- items generados por JS -->
+      </div>
+      <div class="tuner-grid" id="tunerGradients" style="margin-top:10px"></div>
+      <div class="tuner-actions">
+        <button class="btn secondary" id="resetTheme">Restablecer</button>
+        <button class="btn cta" id="exportTheme">Exportar JSON</button>
+      </div>
+    </div>
+
+    <div class="footer">© CasinoOnline UI • Paleta Negro & Dorado con Tuner</div>
+  </div>
+
+  <script>
+    // === SWATCHES ===
+    const TOKENS = [
+      { name: '--color-brand-black', usage: 'Fondo global (negro)' },
+      { name: '--color-brand-surface', usage: 'Superficies / paneles' },
+      { name: '--color-white', usage: 'Texto primario' },
+      { name: '--color-gold', usage: 'Dorado principal' },
+      { name: '--color-gold-600', usage: 'Dorado intenso' },
+      { name: '--color-gold-700', usage: 'Dorado oscuro' },
+      { name: '--color-gold-800', usage: 'Dorado profundo' },
+      { name: '--color-muted', usage: 'Texto secundario' },
+      { name: '--color-mid', usage: 'Bordes sutiles' },
+      { name: '--color-green', usage: 'Acciones/éxito' },
+      { name: '--color-blue', usage: 'Links/info' },
+      { name: '--color-purple', usage: 'VIP' },
+      { name: '--color-red', usage: 'Error/alerta' },
+    ];
+
+    const swatches = document.getElementById('swatches');
+
+    function cssVar(name){
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function appropriateTextColor(hex){
+      const c = (hex||'').replace('#','');
+      if(c.length !== 6) return '#fff';
+      const r = parseInt(c.substring(0,2),16)/255;
+      const g = parseInt(c.substring(2,4),16)/255;
+      const b = parseInt(c.substring(4,6),16)/255;
+      const srgb = [r,g,b].map(v => (v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4)));
+      const L = 0.2126*srgb[0] + 0.7152*srgb[1] + 0.0722*srgb[2];
+      return L > 0.6 ? '#151515' : '#ffffff';
+    }
+
+    function renderSwatches(){
+      swatches.innerHTML = '';
+      TOKENS.forEach(t => {
+        const value = cssVar(t.name);
+        const card = document.createElement('div');
+        card.className = 'card';
+        const textColor = /^#/.test(value) ? appropriateTextColor(value) : '#fff';
+        card.innerHTML = `
+          <div class="swatch" style="background:${value}; color:${textColor}">
+            <span style="font-weight:900; font-size:12px">${t.name}</span>
+            <span style="font-family:ui-monospace,monospace; font-size:12px; opacity:.95">${value}</span>
+          </div>
+          <div class="content">
+            <div class="token">${t.name}</div>
+            <div class="meta">${t.usage}</div>
+            <div class="row">
+              <button class="btn copy" data-copy="${t.name}">Copiar variable</button>
+              <button class="btn copy" data-copy="${value}">Copiar valor</button>
+            </div>
+          </div>`;
+        swatches.appendChild(card);
+      });
+    }
+
+    // === COPY ===
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.btn.copy');
+      if(!btn) return;
+      const val = btn.getAttribute('data-copy');
+      navigator.clipboard.writeText(val).then(()=>{
+        const old = btn.textContent;
+        btn.textContent = 'Copiado!';
+        setTimeout(()=> btn.textContent = old, 900);
+      }).catch(()=>{ alert('No se pudo copiar'); })
+    })
+
+    // === THEME TUNER ===
+    const colorVars = ['--color-brand-black','--color-brand-surface','--color-white','--color-gold','--color-gold-600','--color-gold-700','--color-gold-800','--color-green','--color-blue','--color-purple','--color-red'];
+    const gradientVars = ['--grad-gold','--grad-gold-soft','--grad-gold-angled','--grad-black-gold','--grad-green','--grad-blue','--grad-purple','--grad-gold-v1'];
+
+    const initialTheme = {};
+    [...colorVars, ...gradientVars].forEach(v => initialTheme[v] = cssVar(v));
+
+    const tunerColors = document.getElementById('tunerColors');
+    const tunerGradients = document.getElementById('tunerGradients');
+
+    function hexOrEmpty(val){ return /^#([0-9a-f]{3}){1,2}$/i.test(val)? val : '' }
+
+    function renderTuner(){
+      tunerColors.innerHTML = '';
+      colorVars.forEach(v =>{
+        const value = cssVar(v);
+        const item = document.createElement('div');
+        item.className = 'tuner-item';
+        item.innerHTML = `
+          <label>${v}</label>
+          <div class="tuner-row">
+            <input type="color" value="${hexOrEmpty(value)}" data-var="${v}" class="tuner-color" />
+            <input type="text" value="${value}" data-var="${v}" class="tuner-text" />
+          </div>`;
+        tunerColors.appendChild(item);
+      });
+
+      tunerGradients.innerHTML = '';
+      gradientVars.forEach(v =>{
+        const value = cssVar(v);
+        const item = document.createElement('div');
+        item.className = 'tuner-item';
+        item.innerHTML = `
+          <label>${v}</label>
+          <div class="tuner-row">
+            <input type="text" value="${value}" data-var="${v}" class="tuner-text" />
+          </div>
+          <div class="swatch" style="height:48px; background:${value}; border-radius:8px; margin-top:8px"></div>`;
+        tunerGradients.appendChild(item);
+      });
+    }
+
+    function setVar(name, value){
+      document.documentElement.style.setProperty(name, value);
+      renderSwatches();
+    }
+
+    document.addEventListener('input', (e)=>{
+      if(e.target.matches('.tuner-color')){
+        const name = e.target.getAttribute('data-var');
+        const paired = e.target.parentElement.querySelector('.tuner-text');
+        paired.value = e.target.value;
+        setVar(name, e.target.value);
+      }
+      if(e.target.matches('.tuner-text')){
+        const name = e.target.getAttribute('data-var');
+        setVar(name, e.target.value);
+      }
+    });
+
+    document.getElementById('resetTheme').addEventListener('click', ()=>{
+      Object.entries(initialTheme).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
+      renderSwatches();
+      renderTuner();
+    });
+
+    document.getElementById('exportTheme').addEventListener('click', ()=>{
+      const out = {};
+      [...colorVars, ...gradientVars].forEach(v => out[v] = cssVar(v));
+      const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'casino-theme.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Init
+    renderSwatches();
+    renderTuner();
+  </script>
+</body>
+</html>
