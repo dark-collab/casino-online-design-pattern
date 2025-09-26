@@ -6,10 +6,11 @@
   <title>CasinoOnline – Paleta Negro & Dorado</title>
   <style>
     :root{
-      /* Identidad principal */
-      --color-brand-black: #0B0B0B; /* Fondo global */
+      /* Colores Identidad principal */
+      --color-brand-bg: #0B0B0B; /* Fondo global */
       --color-brand-surface: #151515; /* Superficies, tarjetas */
-      --color-white: #FFFFFF; /* Texto primario */
+      --color-white: #FFFFFF; /* color de uso general */
+      --color-white: #000000; /* color de uso general */
 
       /* Oro */
       --color-gold: #FFD700; /* Dorado principal */
@@ -17,7 +18,7 @@
       --color-gold-700: #C9A500; /* Dorado oscuro */
       --color-gold-800: #9C7A00; /* Dorado profundo */
 
-      /* Secundarios / soporte */
+      /* Secundarios / soporte / solidos */
       --color-muted: #A1A1A1; /* Texto secundario */
       --color-mid: #2B2B2B; /* Bordes sutiles */
       --color-green: #22C55E; /* CTA/éxito */
@@ -26,21 +27,20 @@
       --color-red: #DC2626; /* Error */
 
       /* Gradientes Oro actuales */
-      --grad-gold: linear-gradient(90deg, var(--color-gold-700), var(--color-gold));
+      --grad-gold: linear-gradient(90deg,#C08400,#FACC15);
       --grad-gold-soft: linear-gradient(135deg, #B08D18, #FFE680);
       --grad-gold-angled: linear-gradient(120deg, #4A3A0A, #B08D18 35%, #FFE680 70%, #C9A500);
-      --grad-black-gold: linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%);
+      --grad-gold-intense: linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%);
 
       /* Degradados de la 1ª paleta (incluidos) */
       --grad-green: linear-gradient(90deg,#16A34A,#4ADE80);
       --grad-blue: linear-gradient(90deg,#1D4ED8,#60A5FA);
       --grad-purple: linear-gradient(90deg,#7E22CE,#C084FC);
-      --grad-gold-v1: linear-gradient(90deg,#C08400,#FACC15);
 
       /* Tipografía – tokens */
-      --font-heading: "Alan Sans", ui-sans-serif, system-ui;
-      --font-ui: "Montserrat", ui-sans-serif, system-ui;
-      --font-deco: "Solitreo", cursive;
+      --font-heading: "Alan Sans", ui-sans-serif, system-ui; /* encabezados / titulos */
+      --font-ui: "Montserrat", ui-sans-serif, system-ui; /* general */
+      --font-deco: "Solitreo", cursive; /* decorativa / promociones / numeros */
       --fw-heading: 800; /* 700/800 sugerido */
       --fw-body: 400;    /* 400/500/600/700 */
       --lh-heading: 1.15; /* LH = line-height */
@@ -70,7 +70,7 @@
     html, body { height: 100%; }
     body{
       margin:0;
-      background: radial-gradient(1200px 800px at 10% -10%, rgba(201,165,0,.08), transparent 40%), var(--color-brand-black);
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(201,165,0,.08), transparent 40%), var(--color-brand-bg);
       font-family: var(--font-ui);
       color: var(--color-white);
       letter-spacing:.2px;
@@ -110,7 +110,7 @@
     .link{font-weight:800; text-decoration:none; background: var(--grad-gold-soft); -webkit-background-clip:text; background-clip:text; color:transparent}
     .link:hover{text-decoration:underline}
 
-    .badge{display:inline-block; font-weight:900; padding:6px 10px; border-radius:999px; background: var(--grad-black-gold); color:#fff; border:1px solid rgba(255,255,255,.06)}
+    .badge{display:inline-block; font-weight:900; padding:6px 10px; border-radius:999px; background: var(--grad-gold-intense); color:#fff; border:1px solid rgba(255,255,255,.06)}
 
     .alert{border-left: 6px solid var(--color-red); background: #2a1212; color:#ffdede; padding:12px; border-radius: var(--radius-md)}
 
@@ -125,11 +125,10 @@
     .g.gold{background: var(--grad-gold)}
     .g.gold-soft{background: var(--grad-gold-soft)}
     .g.gold-angled{background: var(--grad-gold-angled)}
-    .g.black-gold{background: var(--grad-black-gold)}
+    .g.black-gold{background: var(--grad-gold-intense)}
     .g.green{background: var(--grad-green)}
     .g.blue{background: var(--grad-blue)}
     .g.purple{background: var(--grad-purple)}
-    .g.gold-v1{background: var(--grad-gold-v1)}
 
     .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#0f0f0f; border:1px solid var(--color-mid); padding:2px 6px; border-radius:6px; font-size:12px}
 
@@ -173,7 +172,7 @@
         <div class="card"><div class="swatch g gold"></div><div class="content"><div class="token">--grad-gold</div><div class="meta">linear-gradient(90deg, var(--color-gold-700), var(--color-gold))</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g gold-soft"></div><div class="content"><div class="token">--grad-gold-soft</div><div class="meta">linear-gradient(135deg, #B08D18, #FFE680)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-soft)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g gold-angled"></div><div class="content"><div class="token">--grad-gold-angled</div><div class="meta">linear-gradient(120deg, #4A3A0A, #B08D18 35%, #FFE680 70%, #C9A500)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-angled)">Copiar variable</button></div></div></div>
-        <div class="card"><div class="swatch g black-gold"></div><div class="content"><div class="token">--grad-black-gold</div><div class="meta">linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%)</div><div class="row"><button class="btn copy" data-copy="var(--grad-black-gold)">Copiar variable</button></div></div></div>
+        <div class="card"><div class="swatch g black-gold"></div><div class="content"><div class="token">--grad-gold-intense</div><div class="meta">linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-intense)">Copiar variable</button></div></div></div>
       </div>
     </div>
 
@@ -184,7 +183,6 @@
         <div class="card"><div class="swatch g green"></div><div class="content"><div class="token">--grad-green</div><div class="meta">linear-gradient(90deg,#16A34A,#4ADE80)</div><div class="row"><button class="btn copy" data-copy="var(--grad-green)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g blue"></div><div class="content"><div class="token">--grad-blue</div><div class="meta">linear-gradient(90deg,#1D4ED8,#60A5FA)</div><div class="row"><button class="btn copy" data-copy="var(--grad-blue)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g purple"></div><div class="content"><div class="token">--grad-purple</div><div class="meta">linear-gradient(90deg,#7E22CE,#C084FC)</div><div class="row"><button class="btn copy" data-copy="var(--grad-purple)">Copiar variable</button></div></div></div>
-        <div class="card"><div class="swatch g gold-v1"></div><div class="content"><div class="token">--grad-gold-v1</div><div class="meta">linear-gradient(90deg,#C08400,#FACC15)</div><div class="row"><button class="btn copy" data-copy="var(--grad-gold-v1)">Copiar variable</button></div></div></div>
       </div>
     </div>
 
@@ -198,7 +196,7 @@
           <h2 class="demo">H2 (Sección) – Próximos eventos</h2>
           <h3 class="demo">H3 (Tarjeta) – Jackpot semanal</h3>
           <p class="demo">Body – Montserrat Regular. Este texto sirve para evaluar legibilidad en UI (mínimo 16px, alto contraste, <em>focus visible</em>).</p>
-          <div class="banner-deco" aria-label="Decorativa">Campaña exclusiva • Bono Dorado</div>
+          <div class="banner-deco" aria-label="Decorativa">Campaña exclusiva • Bono Dorado •  +400 -200</div>
           <div class="row" style="margin-top:10px">
             <button class="btn cta">CTA / Botón</button>
             <a href="#" class="link">Link de prueba</a>
@@ -332,6 +330,7 @@
             <button class="btn cta">Depositar</button>
             <a href="#" class="link">Ver evento en vivo</a>
             <span class="badge">VIP</span>
+            <span class="badge">Casino Online</span>
           </div>
         </div>
         <div class="panel">
@@ -381,7 +380,7 @@
 
     // === SWATCHES ===
     const TOKENS = [
-      { name: '--color-brand-black', usage: 'Fondo global (negro)' },
+      { name: '--color-brand-bg', usage: 'Fondo global' },
       { name: '--color-brand-surface', usage: 'Superficies / paneles' },
       { name: '--color-white', usage: 'Texto primario' },
       { name: '--color-gold', usage: 'Dorado principal' },
@@ -446,8 +445,8 @@
     })
 
     // === THEME TUNER (colores & degradados) ===
-    const colorVars = ['--color-brand-black','--color-brand-surface','--color-white','--color-gold','--color-gold-600','--color-gold-700','--color-gold-800','--color-green','--color-blue','--color-purple','--color-red'];
-    const gradientVars = ['--grad-gold','--grad-gold-soft','--grad-gold-angled','--grad-black-gold','--grad-green','--grad-blue','--grad-purple','--grad-gold-v1'];
+    const colorVars = ['--color-brand-bg','--color-brand-surface','--color-white','--color-gold','--color-gold-600','--color-gold-700','--color-gold-800','--color-green','--color-blue','--color-purple','--color-red'];
+    const gradientVars = ['--grad-gold','--grad-gold-soft','--grad-gold-angled','--grad-gold-intense','--grad-green','--grad-blue','--grad-purple'];
 
     const initialTheme = {};
     [...colorVars, ...gradientVars].forEach(v => initialTheme[v] = cssVar(v));
