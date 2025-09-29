@@ -303,6 +303,7 @@
         </div>
       </div>
       <div class="tuner-actions">
+        <button class="btn secondary" id="resetFonts">Restablecer tipografías</button>
         <button class="btn cta" id="exportCSS">Exportar CSS</button>
       </div>
 
@@ -447,16 +448,56 @@
     // === THEME TUNER (colores & degradados) ===
     const colorVars = ['--color-brand-bg','--color-brand-surface','--color-white','--color-gold','--color-gold-600','--color-gold-700','--color-gold-800','--color-green','--color-blue','--color-purple','--color-red'];
     const gradientVars = ['--grad-gold','--grad-gold-soft','--grad-gold-angled','--grad-gold-intense','--grad-green','--grad-blue','--grad-purple'];
+    const borderVars = [
+      { name: '--surface-border-color', kind: 'color' },
+      { name: '--surface-border-width', kind: 'length' }
+    ];
 
     const initialTheme = {};
     [...colorVars, ...gradientVars].forEach(v => initialTheme[v] = cssVar(v));
 
     const tunerColors = document.getElementById('tunerColors');
     const tunerGradients = document.getElementById('tunerGradients');
+    const tunerBorders = document.getElementById('tunerBorders');
 
     function hexOrEmpty(val){ return /^#([0-9a-f]{3}){1,2}$/i.test(val)? val : '' }
+    function clamp(n, min, max){ n = parseFloat(n); if(isNaN(n)) return min; return Math.max(min, Math.min(max, n)); }
+
+    function splitLinearGradient(str){
+      const prefix = 'linear-gradient(';
+      if(!str || !str.trim().toLowerCase().startsWith(prefix)) return null;
+      const inside = str.trim().slice(prefix.length, -1); // sin "linear-gradient(" y ")"
+      const comma = inside.indexOf(',');
+      if (comma === -1) return null;
+
+      const first = inside.slice(0, comma).trim(); // ángulo o dirección
+      const rest  = inside.slice(comma+1).trim();  // paradas de color
+
+      let angle = null;
+      const m = first.match(/^([0-9.]+)deg$/i);
+      if (m) angle = parseFloat(m[1]);
+
+      // Direcciones comunes → ángulo
+      if (angle === null){
+        const d = first.toLowerCase();
+        if (d === 'to right')  angle = 90;
+        else if (d === 'to bottom') angle = 180;
+        else if (d === 'to left')   angle = 270;
+        else if (d === 'to top')    angle = 0;
+      }
+      return { angle, rest };
+    }
+
+    function updateLinearGradientAngle(str, deg){
+      const p = splitLinearGradient(str);
+      if(!p) return str;
+      const a = clamp(deg, 0, 360);
+      return `linear-gradient(${a}deg, ${p.rest})`;
+    }
+
 
     function renderColorTuner(){
+      // Colores
       tunerColors.innerHTML = '';
       colorVars.forEach(v =>{
         const value = cssVar(v);
@@ -470,19 +511,45 @@
           </div>`;
         tunerColors.appendChild(item);
       });
-
+      // Gradientes con control de ángulo
       tunerGradients.innerHTML = '';
       gradientVars.forEach(v =>{
         const value = cssVar(v);
+        const parts = splitLinearGradient(value) || { angle: 90 };
         const item = document.createElement('div');
         item.className = 'tuner-item';
         item.innerHTML = `
           <label>${v}</label>
           <div class="tuner-row">
+            <input type="range" min="0" max="360" step="1" value="${parts.angle ?? 90}" data-var="${v}" class="grad-angle" />
             <input type="text" value="${value}" data-var="${v}" class="tuner-text" />
           </div>
           <div class="swatch" style="height:48px; background:${value}; border-radius:8px; margin-top:8px"></div>`;
         tunerGradients.appendChild(item);
+      });
+      // Bordes
+      tunerBorders.innerHTML = '';
+      borderVars.forEach(({name, kind})=>{
+        const value = cssVar(name);
+        const item = document.createElement('div');
+        item.className = 'tuner-item';
+        if(kind === 'color'){
+          item.innerHTML = `
+            <label>${name}</label>
+            <div class="tuner-row">
+              <input type="color" value="${hexOrEmpty(value)}" data-var="${name}" class="tuner-color" />
+              <input type="text" value="${value}" data-var="${name}" class="tuner-text" />
+            </div>`;
+        } else {
+          const num = parseInt(value,10);
+          item.innerHTML = `
+            <label>${name}</label>
+            <div class="tuner-row">
+              <input type="range" min="0" max="8" step="1" value="${isNaN(num)?1:num}" data-var="${name}" class="tuner-range" />
+              <input type="text" value="${value}" data-var="${name}" class="tuner-length" placeholder="Ej: 1px" />
+            </div>`;
+        }
+        tunerBorders.appendChild(item);
       });
     }
 
@@ -492,15 +559,61 @@
     }
 
     document.addEventListener('input', (e)=>{
+      // Color picker → texto
       if(e.target.matches('.tuner-color')){
         const name = e.target.getAttribute('data-var');
         const paired = e.target.parentElement.querySelector('.tuner-text');
         paired.value = e.target.value;
         setVar(name, e.target.value);
       }
+      // NUEVO: slider de ángulo para gradientes → actualiza texto / var / preview
+      if (e.target.matches('.grad-angle')) {
+        const name = e.target.getAttribute('data-var');
+        const item = e.target.closest('.tuner-item');
+        const text = item.querySelector('.tuner-text'); // input del gradiente
+        const newVal = updateLinearGradientAngle(text.value, e.target.value);
+        text.value = newVal;
+        setVar(name, newVal);
+        const preview = item.querySelector('.swatch');
+        if (preview) preview.style.background = newVal;
+      }
+      // Texto → aplica (hex/gradiente/borde)
       if(e.target.matches('.tuner-text')){
         const name = e.target.getAttribute('data-var');
-        setVar(name, e.target.value);
+        const val = e.target.value;
+        setVar(name, val);
+        // Si hay color picker hermano y es HEX válido, sincronízalo
+        const item = e.target.closest('.tuner-item');
+        const colorInput = item?.querySelector('.tuner-color');
+        if(colorInput && /^#([0-9a-f]{3}){1,2}$/i.test(val)) colorInput.value = val;
+        // Si hay preview (gradiente), actualízalo
+        const preview = item?.querySelector('.swatch');
+        if(preview) preview.style.background = val;
+        // NUEVO: si este texto es un linear-gradient, sincroniza el slider de ángulo
+        const angle = item?.querySelector('.grad-angle');
+        if (angle) {
+          const p = splitLinearGradient(val);
+          if (p && typeof p.angle === 'number') angle.value = p.angle;
+        }
+      }
+      // Slider (border width) → texto
+      if(e.target.matches('.tuner-range')){
+        const name = e.target.getAttribute('data-var');
+        const val = `${e.target.value}px`;
+        const paired = e.target.parentElement.querySelector('.tuner-length');
+        paired.value = val;
+        setVar(name, val);
+      }
+      // Texto (border width) → slider
+      if(e.target.matches('.tuner-length')){
+        const name = e.target.getAttribute('data-var');
+        let v = e.target.value.trim();
+        if(/^\d+$/.test(v)) v = v + 'px';
+        const num = parseInt(v,10);
+        const rng = e.target.parentElement.querySelector('.tuner-range');
+        if(rng && !isNaN(num)) rng.value = num;
+        e.target.value = v;
+        setVar(name, v);
       }
     });
 
@@ -512,7 +625,7 @@
 
     document.getElementById('exportTheme')?.addEventListener('click', ()=>{
       const out = {};
-      [...colorVars, ...gradientVars].forEach(v => out[v] = cssVar(v));
+      [...colorVars, ...gradientVars, ...borderVars.map(b=>b.name)].forEach(v => out[v] = cssVar(v));
       const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -555,7 +668,7 @@
       ['Iansui', new Set()],
     ]);
 
-    function gfName(name){ return (name||'').trim().replace(new RegExp('\s+','g'), '+'); }
+    function gfName(name){ return (name||'').trim().replace(new RegExp(' +','g'), '+'); }
 
     function buildGFontsURL(){
       const families = [];
@@ -607,7 +720,7 @@
       ensureGFontsLink();
     }
 
-    // Listeners
+    // Listeners tipografía
     ['change','input'].forEach(ev =>{
       inputs.heading.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.heading.value, [inputs.fwHeading.value]); applyFontVars(); });
       inputs.fwHeading.addEventListener(ev, ()=>{ addOrUpdateFamily(inputs.heading.value, [inputs.fwHeading.value]); applyFontVars(); });
@@ -628,7 +741,8 @@
 
     inputs.addFamily.addEventListener('click', ()=>{
       const name = inputs.customFamily.value.trim();
-      const weights = (inputs.customWeights.value||'').split(new RegExp('\s*;\s*|\s*,\s*')).filter(Boolean);
+      const raw = inputs.customWeights.value || '';
+      const weights = raw.replace(/,/g,';').split(';').map(s=>s.trim()).filter(Boolean);
       addOrUpdateFamily(name, weights);
       inputs.customFamily.value=''; inputs.customWeights.value='';
     });
@@ -648,21 +762,7 @@
 
     exportCSS?.addEventListener('click', ()=>{
       const href = document.getElementById(linkId)?.href || buildGFontsURL();
-      const css = `@import url('${href}');
-
-:root{
-  --font-heading: '${inputs.heading.value}', ui-sans-serif, system-ui;
-  --font-ui: '${inputs.body.value}', ui-sans-serif, system-ui;
-  --font-deco: '${inputs.deco.value}', cursive;
-  --fw-heading: ${inputs.fwHeading.value};
-  --fw-body: ${inputs.fwBody.value};
-  --lh-heading: ${inputs.lhHeading.value};
-  --lh-body: ${inputs.lhBody.value};
-  --fs-h1-d: ${inputs.fsH1D.value}; --fs-h1-m: ${inputs.fsH1M.value};
-  --fs-h2-d: ${inputs.fsH2D.value}; --fs-h2-m: ${inputs.fsH2M.value};
-  --fs-h3-d: ${inputs.fsH3D.value}; --fs-h3-m: ${inputs.fsH3M.value};
-  --fs-body-d: ${inputs.fsBodyD.value}; --fs-body-m: ${inputs.fsBodyM.value};
-}`;
+      const css = `@import url('${href}');\n\n:root{\n  --font-heading: '${inputs.heading.value}', ui-sans-serif, system-ui;\n  --font-ui: '${inputs.body.value}', ui-sans-serif, system-ui;\n  --font-deco: '${inputs.deco.value}', cursive;\n  --fw-heading: ${inputs.fwHeading.value};\n  --fw-body: ${inputs.fwBody.value};\n  --lh-heading: ${inputs.lhHeading.value};\n  --lh-body: ${inputs.lhBody.value};\n  --fs-h1-d: ${inputs.fsH1D.value}; --fs-h1-m: ${inputs.fsH1M.value};\n  --fs-h2-d: ${inputs.fsH2D.value}; --fs-h2-m: ${inputs.fsH2M.value};\n  --fs-h3-d: ${inputs.fsH3D.value}; --fs-h3-m: ${inputs.fsH3M.value};\n  --fs-body-d: ${inputs.fsBodyD.value}; --fs-body-m: ${inputs.fsBodyM.value};\n}`;
       const blob = new Blob([css], {type:'text/css'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
