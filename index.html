@@ -142,6 +142,7 @@
     .tuner-row > *{min-width:0; max-width:100%}
     .tuner-row input[type="text"], .tuner-row select{flex:1 1 160px; width:100%; background:#0f0f0f; color:#fff; border:1px solid var(--color-mid); border-radius:8px; padding:8px}
     .tuner-row input[type="color"]{flex:0 0 42px; width:42px; height:34px; background:transparent; border:0; padding:0}
+    .tuner-row input[type="range"]{flex:1 1 160px}
     .tuner-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
     .btn.secondary{background:#0f0f0f; color:#fff; border:1px solid var(--color-mid)}
 
@@ -720,6 +721,55 @@
       (weightsArray||[]).forEach(w => { const n = parseInt(w,10); if(!isNaN(n)) set.add(n); });
       ensureGFontsLink();
     }
+
+    // --- Reset de tipografías ---
+    const resetFontsBtn = document.getElementById('resetFonts');
+
+    const initialFonts = {
+      heading: 'Alan Sans',   fwHeading: '800',
+      body: 'Montserrat',     fwBody: '400',
+      deco: 'Solitreo',
+      lhHeading: '1.15',      lhBody: '1.5',
+      fsH1D: '56px', fsH1M: '34px',
+      fsH2D: '36px', fsH2M: '26px',
+      fsH3D: '26px', fsH3M: '19px',
+      fsBodyD: '17px', fsBodyM: '15px',
+      vw: 'desktop'
+    };
+
+    function resetFonts(){
+      // Restablecer inputs
+      inputs.heading.value  = initialFonts.heading;
+      inputs.fwHeading.value= initialFonts.fwHeading;
+      inputs.body.value     = initialFonts.body;
+      inputs.fwBody.value   = initialFonts.fwBody;
+      inputs.deco.value     = initialFonts.deco;
+
+      inputs.lhHeading.value= initialFonts.lhHeading;
+      inputs.lhBody.value   = initialFonts.lhBody;
+
+      inputs.fsH1D.value = initialFonts.fsH1D; inputs.fsH1M.value = initialFonts.fsH1M;
+      inputs.fsH2D.value = initialFonts.fsH2D; inputs.fsH2M.value = initialFonts.fsH2M;
+      inputs.fsH3D.value = initialFonts.fsH3D; inputs.fsH3M.value = initialFonts.fsH3M;
+      inputs.fsBodyD.value= initialFonts.fsBodyD; inputs.fsBodyM.value= initialFonts.fsBodyM;
+
+      // Vista (desktop/mobile)
+      document.documentElement.setAttribute('data-vw', initialFonts.vw);
+      if (vwSwitch) vwSwitch.value = initialFonts.vw;
+
+      // Reconstruir familias para Google Fonts
+      fonts.clear();
+      fonts.set('Alan Sans',  new Set([700,800]));
+      fonts.set('Montserrat', new Set([400,500,600,700]));
+      fonts.set('Solitreo',   new Set());
+      fonts.set('Iansui',     new Set());
+
+      ensureGFontsLink();
+      applyFontVars();
+    }
+
+    resetFontsBtn?.addEventListener('click', resetFonts);
+
 
     // Listeners tipografía
     ['change','input'].forEach(ev =>{
