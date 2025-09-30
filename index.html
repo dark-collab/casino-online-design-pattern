@@ -6,9 +6,12 @@
   <title>CasinoOnline – Paleta Negro & Dorado</title>
   <style>
     :root{
+      /* Config inicial borders */
+      --surface-border-color: #2b3f75; /* igual que --color-mid, en HEX para el color picker */
+      --surface-border-width: 1px;
       /* Colores Identidad principal */
-      --color-brand-bg: #0B0B0B; /* Fondo global */
-      --color-brand-surface: #151515; /* Superficies, tarjetas */
+      --color-brand-bg: #091126; /* Fondo global */
+      --color-brand-surface: #101b37; /* Superficies, tarjetas */
       --color-white: #FFFFFF; /* color de uso general */
       --color-black: #000000; /* color de uso general */
 
@@ -21,7 +24,7 @@
       /* Secundarios / soporte / solidos */
       --color-muted: #A1A1A1; /* Texto secundario */
       --color-mid: #2B2B2B; /* Bordes sutiles */
-      --color-green: #22C55E; /* CTA/éxito */
+      --color-green: #0bb552; /* CTA/éxito */
       --color-blue: #2563EB; /* Info/links */
       --color-purple: #9333EA; /* VIP */
       --color-red: #DC2626; /* Error */
@@ -30,7 +33,7 @@
       --grad-gold: linear-gradient(90deg,#C08400,#FACC15);
       --grad-gold-soft: linear-gradient(135deg, #B08D18, #FFE680);
       --grad-gold-angled: linear-gradient(120deg, #4A3A0A, #B08D18 35%, #FFE680 70%, #C9A500);
-      --grad-gold-intense: linear-gradient(90deg, #0B0B0B, #1E1E1E 30%, #C9A500 85%);
+      --grad-gold-intense: linear-gradient(90deg, #665000 0%, #C9A500 50%, #F7CB07 100%);
 
       /* Degradados de la 1ª paleta (incluidos) */
       --grad-green: linear-gradient(90deg,#16A34A,#4ADE80);
@@ -39,8 +42,8 @@
 
       /* Tipografía – tokens */
       --font-heading: "Alan Sans", ui-sans-serif, system-ui; /* encabezados / titulos */
-      --font-ui: "Montserrat", ui-sans-serif, system-ui; /* general */
-      --font-deco: "Solitreo", cursive; /* decorativa / promociones / numeros */
+      --font-ui: "Poppins", ui-sans-serif, system-ui; /* general */
+      --font-deco: "Bebas Neue", cursive; /* decorativa / promociones / numeros */
       --fw-heading: 800; /* 700/800 sugerido */
       --fw-body: 400;    /* 400/500/600/700 */
       --lh-heading: 1.15; /* LH = line-height */
@@ -156,6 +159,79 @@
 
     /* Accesibilidad */
     :focus-visible{ outline: 2px dashed var(--color-gold); outline-offset: 3px; }
+
+    /* Icon grid */
+    .icons-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+    .icon-card {
+      background: var(--color-brand-surface);
+      border: 1px solid var(--color-mid);
+      border-radius: 12px;
+      padding: 12px;
+      display: grid;
+      grid-template-rows: 1fr auto auto;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .icon-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+      border-color: var(--color-gold-700, var(--color-gold));
+    }
+    .icon-preview {
+      display:flex; align-items:center; justify-content:center;
+      min-height:56px; font-size:28px; color:#fff;
+    }
+    .icon-preview svg { width:28px; height:28px; stroke: currentColor; }
+    .icon-name {
+      font-size:12px; color: var(--color-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .icon-snippet {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:11px; color:#ddd; background:#0f0f0f; border:1px solid var(--color-mid);
+      border-radius:6px; padding:4px 6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+
+    .icons-selected-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-top: 15px; }
+
+    .icon-picked {
+      background: var(--color-brand-surface);
+      border: 1px solid var(--color-mid);
+      border-radius: 12px;
+      padding: 10px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 6px;
+    }
+
+    .icon-picked .preview {
+      display:flex; align-items:center; justify-content:center;
+      min-height:48px; font-size:28px; color:#fff;
+    }
+    .icon-picked .preview svg { width:28px; height:28px; stroke: currentColor; }
+
+    .icon-picked .name {
+      font-size:12px; color: var(--color-muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .icon-picked .row { margin-top: 0; }
+
+    .icon-card.selected {
+      outline: 2px solid var(--color-gold-700, var(--color-gold));
+      outline-offset: 2px;
+    }
+
+    .preview-card i { vertical-align: -2px; }
+    .preview-card i, .preview-card svg {
+      color: var(--preview-icon-color, #fff);
+      stroke: var(--preview-icon-color, #fff);
+      width: var(--preview-icon-size, 24px);
+      height: var(--preview-icon-size, 24px);
+      font-size: var(--preview-icon-size, 24px);
+    }
   </style>
 </head>
 <body>
@@ -184,6 +260,86 @@
         <div class="card"><div class="swatch g green"></div><div class="content"><div class="token">--grad-green</div><div class="meta">linear-gradient(90deg,#16A34A,#4ADE80)</div><div class="row"><button class="btn copy" data-copy="var(--grad-green)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g blue"></div><div class="content"><div class="token">--grad-blue</div><div class="meta">linear-gradient(90deg,#1D4ED8,#60A5FA)</div><div class="row"><button class="btn copy" data-copy="var(--grad-blue)">Copiar variable</button></div></div></div>
         <div class="card"><div class="swatch g purple"></div><div class="content"><div class="token">--grad-purple</div><div class="meta">linear-gradient(90deg,#7E22CE,#C084FC)</div><div class="row"><button class="btn copy" data-copy="var(--grad-purple)">Copiar variable</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- Iconos – Selector -->
+    <div class="section" id="iconsSection">
+      <h2>Iconos (Bootstrap Icons + Lucide)</h2>
+      <div class="panel">
+        <div class="tuner-row">
+          <select id="iconLibrary" class="tuner-text" style="max-width:200px">
+            <option value="bi">Bootstrap Icons</option>
+            <option value="lucide">Lucide (SVG)</option>
+          </select>
+          <select id="copyMode" class="tuner-text" style="max-width:220px">
+            <option value="html">Copiar: HTML</option>
+            <option value="vue">Copiar: Vue</option>
+          </select>
+          <input id="iconSearch" class="input" placeholder="Buscar (ej. crown, trophy, wallet, dice)">
+        </div>
+
+        <div class="grid icons-grid" id="iconsGrid" style="margin-top:12px"></div>
+
+        <div class="soft" style="margin-top:10px">
+          Consejo: en <strong>HTML</strong> copia <code>&lt;i class="bi bi-...">&lt;/i></code> (Bootstrap) o
+          <code>&lt;i data-lucide="...">&lt;/i></code> (Lucide) + <code>lucide.createIcons()</code>.<br>
+          En <strong>Vue</strong> (opción “Copiar: Vue”), Bootstrap se usa igual; Lucide sugiere
+          <code>lucide-vue-next</code> (componente).
+        </div>
+      </div>
+    </div>
+
+    <!-- Iconos seleccionados -->
+    <div class="section" id="iconsSelection">
+      <h2>Iconos seleccionados</h2>
+      <div class="tuner-actions mb-2">
+        <button class="btn secondary" id="clearSelected">Limpiar</button>
+        <button class="btn cta" id="exportIcons">Exportar JSON</button>
+      </div>
+      <div class="grid icons-selected-grid " id="iconsSelected"></div>
+    </div>
+
+    <!-- Previsualización de componentes -->
+    <div class="section" id="iconsPreview">
+      <h2>Previsualización en componentes</h2>
+      <div class="panel">
+        <div class="tuner-row">
+          <label class="soft">Tamaño</label>
+          <input id="iconSize" type="range" min="16" max="64" value="24" />
+          <label class="soft">Color</label>
+          <input id="iconColor" type="color" value="#FFFFFF" />
+          <label class="soft">Posición en botón</label>
+          <select id="iconPlacement">
+            <option value="left" selected>Izquierda</option>
+            <option value="right">Derecha</option>
+          </select>
+        </div>
+
+        <div class="grid preview-grid" style="margin-top:12px">
+          <div class="panel preview-card">
+            <div class="soft">Botón</div>
+            <button class="btn cta" id="previewButton">
+              <i class="bi bi-star-fill"></i> CTA
+            </button>
+          </div>
+
+          <div class="panel preview-card">
+            <div class="soft">Navbar</div>
+            <nav class="preview-navbar" id="previewNavbar" style="display:flex; gap:14px; flex-wrap:wrap; margin-top:6px">
+              <a class="link" href="#"><i class="bi bi-house"></i> Inicio</a>
+              <a class="link" href="#"><i class="bi bi-controller"></i> Juegos</a>
+              <a class="link" href="#"><i class="bi bi-wallet2"></i> Billetera</a>
+            </nav>
+          </div>
+
+          <div class="panel preview-card">
+            <div class="soft">Label / Badge</div>
+            <span class="badge" id="previewBadge">
+              <i class="bi bi-trophy-fill"></i> VIP
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -218,10 +374,10 @@
               </thead>
               <tbody>
                 <tr><td style="padding:6px">H1 (Hero/Promo)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">52–60px</td><td style="padding:6px">32–36px</td><td style="padding:6px">LH 1.1–1.2</td></tr>
-                <tr><td style="padding:6px">H2 (Sección)</td><td style="padding:6px">Montserrat <strong>Bold</strong></td><td style="padding:6px">32–40px</td><td style="padding:6px">24–28px</td><td style="padding:6px"></td></tr>
-                <tr><td style="padding:6px">H3 (Tarjeta)</td><td style="padding:6px">Montserrat <strong>SemiBold</strong></td><td style="padding:6px">24–28px</td><td style="padding:6px">18–20px</td><td style="padding:6px"></td></tr>
-                <tr><td style="padding:6px">Body</td><td style="padding:6px">Montserrat <strong>Regular</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">14–16px</td><td style="padding:6px"><strong>LH 1.5</strong></td></tr>
-                <tr><td style="padding:6px">CTA/Botón</td><td style="padding:6px">Montserrat <strong>Bold</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">16–18px</td><td style="padding:6px">MAYÚSCULAS</td></tr>
+                <tr><td style="padding:6px">H2 (Sección)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">32–40px</td><td style="padding:6px">24–28px</td><td style="padding:6px"></td></tr>
+                <tr><td style="padding:6px">H3 (Tarjeta)</td><td style="padding:6px">Alan Sans <strong>SemiBold</strong></td><td style="padding:6px">24–28px</td><td style="padding:6px">18–20px</td><td style="padding:6px"></td></tr>
+                <tr><td style="padding:6px">Body</td><td style="padding:6px">Poppins <strong>Regular</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">14–16px</td><td style="padding:6px"><strong>LH 1.5</strong></td></tr>
+                <tr><td style="padding:6px">CTA/Botón</td><td style="padding:6px">Poppins <strong>Bold</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">16–18px</td><td style="padding:6px">MAYÚSCULAS</td></tr>
               </tbody>
             </table>
           </div>
@@ -244,7 +400,7 @@
         <div class="tuner-item">
           <label>Familia UI / Body</label>
           <div class="tuner-row">
-            <input list="font-suggestions" id="fontBody" class="tuner-text" value="Montserrat" />
+            <input list="font-suggestions" id="fontBody" class="tuner-text" value="Poppins" />
             <select id="fwBody" class="tuner-text">
               <option value="400" selected>400</option>
               <option value="500">500</option>
@@ -256,7 +412,7 @@
         <div class="tuner-item">
           <label>Decorativa (campañas)</label>
           <div class="tuner-row">
-            <input list="font-suggestions" id="fontDeco" class="tuner-text" value="Solitreo" />
+            <input list="font-suggestions" id="fontDeco" class="tuner-text" value="Bebas Neue" />
           </div>
         </div>
         <div class="tuner-item">
@@ -373,6 +529,12 @@
     <div class="footer">© CasinoOnline UI • Paleta Negro & Dorado con Tuner</div>
   </div>
 
+  <!-- Bootstrap Icons (para <i class="bi bi-...">) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Lucide (para <i data-lucide="..."> + lucide.createIcons()) -->
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+
+
   <!-- Google Fonts dynamic link will be injected here -->
 
   <script>
@@ -451,12 +613,16 @@
     const colorVars = ['--color-brand-bg','--color-brand-surface','--color-white','--color-gold','--color-gold-600','--color-gold-700','--color-gold-800','--color-green','--color-blue','--color-purple','--color-red'];
     const gradientVars = ['--grad-gold','--grad-gold-soft','--grad-gold-angled','--grad-gold-intense','--grad-green','--grad-blue','--grad-purple'];
     const borderVars = [
-      { name: '--surface-border-color', kind: 'color' },
-      { name: '--surface-border-width', kind: 'length' }
+      { name: '--surface-border-color', kind: 'color',  default: '#2B2B2B' },
+      { name: '--surface-border-width', kind: 'length', default: '1px' }
     ];
 
     const initialTheme = {};
-    [...colorVars, ...gradientVars].forEach(v => initialTheme[v] = cssVar(v));
+    [...colorVars, ...gradientVars, ...borderVars.map(b=>b.name)].forEach(v => {
+      const def = borderVars.find(b => b.name === v)?.default;
+      const val = cssVar(v);
+      initialTheme[v] = val || def || '';
+    });
 
     const tunerColors = document.getElementById('tunerColors');
     const tunerGradients = document.getElementById('tunerGradients');
@@ -532,23 +698,24 @@
       // Bordes
       tunerBorders.innerHTML = '';
       borderVars.forEach(({name, kind})=>{
-        const value = cssVar(name);
+        const value = cssVar(name) || borderVars.find(b=>b.name===name)?.default || '';
         const item = document.createElement('div');
         item.className = 'tuner-item';
-        if(kind === 'color'){
+
+        if (kind === 'color'){
           item.innerHTML = `
             <label>${name}</label>
             <div class="tuner-row">
               <input type="color" value="${hexOrEmpty(value)}" data-var="${name}" class="tuner-color" />
-              <input type="text" value="${value}" data-var="${name}" class="tuner-text" />
+              <input type="text"   value="${value}"            data-var="${name}" class="tuner-text" />
             </div>`;
         } else {
-          const num = parseInt(value,10);
+          const num = parseInt(value, 10);
           item.innerHTML = `
             <label>${name}</label>
             <div class="tuner-row">
               <input type="range" min="0" max="8" step="1" value="${isNaN(num)?1:num}" data-var="${name}" class="tuner-range" />
-              <input type="text" value="${value}" data-var="${name}" class="tuner-length" placeholder="Ej: 1px" />
+              <input type="text"  value="${value||'1px'}"   data-var="${name}" class="tuner-length" placeholder="Ej: 1px" />
             </div>`;
         }
         tunerBorders.appendChild(item);
@@ -561,12 +728,22 @@
     }
 
     document.addEventListener('input', (e)=>{
-      // Color picker → texto
-      if(e.target.matches('.tuner-color')){
+      // Color picker → texto/var/preview
+      if (e.target.matches('.tuner-color')){
         const name = e.target.getAttribute('data-var');
-        const paired = e.target.parentElement.querySelector('.tuner-text');
-        paired.value = e.target.value;
-        setVar(name, e.target.value);
+        const val  = e.target.value;
+        const item = e.target.closest('.tuner-item');
+
+        // sincroniza input de texto
+        const text = item?.querySelector('.tuner-text');
+        if (text) text.value = val;
+
+        // aplica variable
+        setVar(name, val);
+
+        // actualiza preview si existe (gradientes no aplican aquí)
+        const preview = item?.querySelector('.swatch');
+        if (preview) preview.style.background = val;
       }
       // NUEVO: slider de ángulo para gradientes → actualiza texto / var / preview
       if (e.target.matches('.grad-angle')) {
@@ -665,8 +842,8 @@
     // Families config → { name: Set(weights) }
     const fonts = new Map([
       ['Alan Sans', new Set([700,800])],
-      ['Montserrat', new Set([400,500,600,700])],
-      ['Solitreo', new Set()],
+      ['Poppins', new Set([400,500,600,700])],
+      ['Bebas Neue', new Set()],
       ['Iansui', new Set()],
     ]);
 
@@ -727,8 +904,8 @@
 
     const initialFonts = {
       heading: 'Alan Sans',   fwHeading: '800',
-      body: 'Montserrat',     fwBody: '400',
-      deco: 'Solitreo',
+      body: 'Poppins',     fwBody: '400',
+      deco: 'Bebas Neue',
       lhHeading: '1.15',      lhBody: '1.5',
       fsH1D: '56px', fsH1M: '34px',
       fsH2D: '36px', fsH2M: '26px',
@@ -760,8 +937,8 @@
       // Reconstruir familias para Google Fonts
       fonts.clear();
       fonts.set('Alan Sans',  new Set([700,800]));
-      fonts.set('Montserrat', new Set([400,500,600,700]));
-      fonts.set('Solitreo',   new Set());
+      fonts.set('Poppins', new Set([400,500,600,700]));
+      fonts.set('Bebas Neue',   new Set());
       fonts.set('Iansui',     new Set());
 
       ensureGFontsLink();
@@ -824,11 +1001,300 @@
     // Initial setup
     document.documentElement.setAttribute('data-vw','desktop');
     addOrUpdateFamily('Alan Sans', [700,800]);
-    addOrUpdateFamily('Montserrat', [400,500,600,700]);
-    addOrUpdateFamily('Solitreo', []);
+    addOrUpdateFamily('Poppins', [400,500,600,700]);
+    addOrUpdateFamily('Bebas Neue', []);
     addOrUpdateFamily('Iansui', []);
     ensureGFontsLink();
     applyFontVars();
+  </script>
+  <script>
+  (() => {
+    "use strict";
+
+    // --- Bootstrap Icons: cargar TODOS los nombres automáticamente ---
+    let ICONS_BI = [];
+    let BI_LIST_READY = false;
+
+    async function loadBootstrapIconNames() {
+      const href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css";
+      const res = await fetch(href);
+      const css = await res.text();
+
+      // Extrae .bi-<nombre>::before  → <nombre>
+      const re = /\.bi-([a-z0-9-]+)::before/g;
+      const set = new Set();
+      let m;
+      while ((m = re.exec(css))) set.add(m[1]);
+
+      ICONS_BI = [...set].sort();
+      BI_LIST_READY = true;
+    }
+
+
+    const ICONS_LUCIDE = [
+      'trophy','award','gift','star','crown','gem','coins',
+      'wallet','credit-card','dice-5','gamepad','ticket',
+      'bolt','flame','rocket','line-chart',
+      'shield-check','message-circle','bell','megaphone','sparkles'
+    ];
+
+    const els = {
+      grid: document.getElementById('iconsGrid'),
+      lib: document.getElementById('iconLibrary'),
+      q: document.getElementById('iconSearch'),
+      copyMode: document.getElementById('copyMode'),
+    };
+
+    function escapeHtml(s){
+      return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function getIconsFor(lib){
+      return lib === 'lucide' ? ICONS_LUCIDE : ICONS_BI;
+    }
+
+    function toPascal(name){
+      return name.replace(/(^|[-_]\s*)(\w)/g, (_, __, c)=> (c||'').toUpperCase()).replace(/[-_]/g,'');
+    }
+
+    function buildSnippet(lib, name, mode){
+      if (lib === 'bi') {
+        return `<i class="bi bi-${name}"></i>`;
+      } else {
+        if (mode === 'vue') return `<${toPascal(name)} :size="24" />`;
+        return `<i data-lucide="${name}"></i>`;
+      }
+    }
+
+    async function ensureBI(){
+      if (!BI_LIST_READY) {
+        const placeholder = '<div class="soft" style="padding:8px">Cargando íconos de Bootstrap…</div>';
+        if (els.grid) els.grid.innerHTML = placeholder;
+        await loadBootstrapIconNames();
+      }
+    }
+
+    async function renderIcons(){
+      if (!els.grid) return;
+      const lib = els.lib?.value || 'bi';
+      const mode = els.copyMode?.value || 'html';
+      const q = (els.q?.value || '').trim().toLowerCase();
+      if (lib === 'bi' && !BI_LIST_READY) {
+        await ensureBI();
+      }
+
+      const list = getIconsFor(lib).filter(n => n.includes(q));
+      const MAX = 14;                // cambia 300 por el tope que quieras
+      const visible = list.slice(0, MAX);
+
+      els.grid.innerHTML = '';
+      visible.forEach(name => {
+        const snippet = buildSnippet(lib, name, mode);
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'icon-card';
+        card.setAttribute('data-copy', snippet);
+        card.dataset.lib = lib;   // 'bi' o 'lucide'
+        card.dataset.name = name; // nombre del ícono
+        card.title = name; 
+
+        const preview = (lib === 'bi')
+          ? `<i class="bi bi-${name}"></i>`
+          : `<i data-lucide="${name}"></i>`;
+
+        card.innerHTML = `
+          <div class="icon-preview">${preview}</div>
+          <div class="icon-name">${name}</div>
+          <div class="icon-snippet">${escapeHtml(snippet)}</div>
+        `;
+        els.grid.appendChild(card);
+      });
+
+      // Render de Lucide una vez inyectado
+      if (window.lucide && (els.lib?.value === 'lucide')) {
+        window.lucide.createIcons();
+      }
+    }
+
+    // Copiar snippet al hacer click
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.icon-card');
+      if (!card) return;
+      const text = card.getAttribute('data-copy') || '';
+      navigator.clipboard.writeText(text).then(()=>{
+        const nameEl = card.querySelector('.icon-name');
+        const old = nameEl.textContent;
+        nameEl.textContent = '¡Copiado!';
+        setTimeout(()=> nameEl.textContent = old, 900);
+      }).catch(()=> alert('No se pudo copiar'));
+    });
+
+    // Eventos de la UI de iconos (si existen)
+    ['input','change'].forEach(ev => {
+      els.lib?.addEventListener(ev, renderIcons);
+      els.q?.addEventListener(ev, renderIcons);
+      els.copyMode?.addEventListener(ev, renderIcons);
+    });
+
+    // Primera render
+    renderIcons();
+    loadBootstrapIconNames().then(renderIcons);
+  })(); /* <-- cierre correcto del IIFE */
+  </script>
+  <script>
+  (() => {
+    // Estado de seleccionados: [{lib:'bi'|'lucide', name:'crown'}]
+    const picked = [];
+
+    const els = {
+      bucket: document.getElementById('iconsSelected'),
+      clear: document.getElementById('clearSelected'),
+      export: document.getElementById('exportIcons'),
+      size: document.getElementById('iconSize'),
+      color: document.getElementById('iconColor'),
+      placement: document.getElementById('iconPlacement'),
+      previewBtn: document.getElementById('previewButton'),
+      previewNav: document.getElementById('previewNavbar'),
+      previewBadge: document.getElementById('previewBadge'),
+    };
+
+    function inBucket(lib, name){
+      return picked.findIndex(i => i.lib===lib && i.name===name);
+    }
+    function togglePick(lib, name){
+      const idx = inBucket(lib, name);
+      if (idx === -1) picked.push({lib, name});
+      else picked.splice(idx, 1);
+      renderBucket();
+      updatePreview();
+    }
+
+    function iconHTML(lib, name){
+      return lib === 'bi'
+        ? `<i class="bi bi-${name}"></i>`
+        : `<i data-lucide="${name}"></i>`;
+    }
+
+    function renderBucket(){
+      if (!els.bucket) return;
+      els.bucket.innerHTML = '';
+      picked.forEach(({lib, name}, i) => {
+        const card = document.createElement('div');
+        card.className = 'icon-picked';
+        card.innerHTML = `
+          <div class="preview">${iconHTML(lib, name)}</div>
+          <div class="name">${lib}:${name}</div>
+          <div class="row">
+            <button class="btn secondary" data-remove="${i}">Quitar</button>
+          </div>
+        `;
+        els.bucket.appendChild(card);
+      });
+      // Re-render Lucide si aplica
+      if (window.lucide) window.lucide.createIcons();
+
+      // Marcar seleccionados también en el grid principal (si existe)
+      document.querySelectorAll('.icon-card').forEach(card => {
+        const sel = inBucket(card.dataset.lib, card.dataset.name) !== -1;
+        card.classList.toggle('selected', sel);
+      });
+    }
+
+    function updatePreview(){
+      // aplica tamaño / color globales
+      const size = `${els.size?.value || 24}px`;
+      const color = els.color?.value || '#FFFFFF';
+      document.documentElement.style.setProperty('--preview-icon-size', size);
+      document.documentElement.style.setProperty('--preview-icon-color', color);
+
+      // elegir íconos para cada preview con fallback
+      const a = picked[0] || {lib:'bi', name:'star-fill'};
+      const b = picked[1] || {lib:'bi', name:'controller'};
+      const c = picked[2] || {lib:'bi', name:'trophy-fill'};
+
+      // Botón: posición
+      if (els.previewBtn){
+        const label = 'CTA';
+        els.previewBtn.innerHTML = els.placement?.value === 'right'
+          ? `${label} ${iconHTML(a.lib, a.name)}`
+          : `${iconHTML(a.lib, a.name)} ${label}`;
+      }
+
+      // Navbar: usa 3
+      if (els.previewNav){
+        els.previewNav.innerHTML = `
+          <a class="link" href="#">${iconHTML(a.lib, a.name)} Opción A</a>
+          <a class="link" href="#">${iconHTML(b.lib, b.name)} Opción B</a>
+          <a class="link" href="#">${iconHTML(c.lib, c.name)} Opción C</a>
+        `;
+      }
+
+      // Badge
+      if (els.previewBadge){
+        els.previewBadge.innerHTML = `${iconHTML(c.lib, c.name)} Destacado`;
+      }
+
+      // Render Lucide dentro del preview si es necesario
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    // Exportar JSON de seleccionados
+    els.export?.addEventListener('click', () => {
+      const payload = picked.map(x => ({ library: x.lib, name: x.name }));
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'selected-icons.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Limpiar
+    els.clear?.addEventListener('click', () => {
+      picked.splice(0, picked.length);
+      renderBucket();
+      updatePreview();
+    });
+
+    // Controles de preview
+    ['input','change'].forEach(ev => {
+      els.size?.addEventListener(ev, updatePreview);
+      els.color?.addEventListener(ev, updatePreview);
+      els.placement?.addEventListener(ev, updatePreview);
+    });
+
+    // Selección desde el grid principal:
+    //  - Doble click → seleccionar/quitar
+    //  - Click con Ctrl/Meta/Shift → seleccionar/quitar (conserva tu click normal para copiar)
+    document.addEventListener('dblclick', (e)=>{
+      const card = e.target.closest('.icon-card');
+      if (!card) return;
+      togglePick(card.dataset.lib, card.dataset.name);
+    });
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.icon-card');
+      if (!card) return;
+      if (e.ctrlKey || e.metaKey || e.shiftKey) {
+        e.preventDefault();
+        togglePick(card.dataset.lib, card.dataset.name);
+      }
+    });
+
+    // Quitar desde la bandeja
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-remove]');
+      if (!btn) return;
+      const idx = parseInt(btn.getAttribute('data-remove'), 10);
+      if (!isNaN(idx)) {
+        picked.splice(idx, 1);
+        renderBucket();
+        updatePreview();
+      }
+    });
+
+    // Primera pasada
+    renderBucket();
+    updatePreview();
+  })();
   </script>
 </body>
 </html>
