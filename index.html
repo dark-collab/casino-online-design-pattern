@@ -232,15 +232,39 @@
       height: var(--preview-icon-size, 24px);
       font-size: var(--preview-icon-size, 24px);
     }
+    /* Secciones colapsables */
+    .section h2{
+      display:flex; align-items:center; gap:8px;
+      cursor:pointer; user-select:none;
+    }
+    .section h2 .caret{
+      display:inline-block; font-size:14px;
+      color: var(--color-muted); transition: transform .15s ease;
+    }
+    .section.is-collapsed h2 .caret{ transform: rotate(-90deg); }
+
+    /* Oculta TODO menos el h2 cuando está colapsada */
+    .section.is-collapsed > :not(h2){ display:none !important; }
+
+    /* Accesibilidad al enfocarlo con teclado */
+    .section h2:focus-visible{
+      outline: 2px dashed var(--color-gold); outline-offset: 4px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1 class="title">Paleta Negro & Dorado</h1>
     <p class="subtitle">Identidad principal centrada en negro y dorado. Incluye ejemplos UI, degradados oro y los degradados de la primera paleta (verde, azul, púrpura y dorado v1). Además, un "Tuner" para ajustar variables y degradados en vivo. <strong>LH</strong> = <em>line-height</em>.</p>
-
+    <div class="tuner-actions" id="collapseToolbar" style="margin-top:-8px">
+      <button class="btn secondary" id="collapseAll">Colapsar todo</button>
+      <button class="btn cta" id="expandAll">Expandir todo</button>
+    </div>
     <!-- Swatches -->
-    <div class="grid" id="swatches"></div>
+    <div class="section">
+      <h2>Tokens de color</h2>
+      <div class="grid" id="swatches"></div>
+    </div>
 
     <!-- Gradients actuales (Oro) -->
     <div class="section">
@@ -1294,6 +1318,69 @@
     // Primera pasada
     renderBucket();
     updatePreview();
+  })();
+  </script>
+  <script>
+  (() => {
+    // Convierte cada .section con h2 en colapsable
+    const sections = Array.from(document.querySelectorAll('.section'));
+    sections.forEach((sec, idx) => {
+      const h2 = sec.querySelector(':scope > h2');
+      if (!h2) return;
+
+      // Inserta caret si no existe
+      if (!h2.querySelector('.caret')) {
+        const caret = document.createElement('span');
+        caret.className = 'caret';
+        caret.textContent = '▾';
+        h2.prepend(caret);
+      }
+
+      // Preparar como "botón"
+      h2.setAttribute('role', 'button');
+      h2.setAttribute('tabindex', '0');
+
+      // Persistencia por título
+      const key = 'coll:' + (h2.textContent.trim() || idx);
+      const saved = localStorage.getItem(key);
+      const collapsed = saved === '0';
+      sec.classList.toggle('is-collapsed', collapsed);
+      h2.setAttribute('aria-expanded', String(!collapsed));
+
+      function toggle(){
+        const nowCollapsed = sec.classList.toggle('is-collapsed');
+        h2.setAttribute('aria-expanded', String(!nowCollapsed));
+        localStorage.setItem(key, nowCollapsed ? '0' : '1');
+      }
+
+      h2.addEventListener('click', toggle);
+      h2.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    // Controles globales (si existe la barra)
+    const toolbar = document.getElementById('collapseToolbar');
+    if (toolbar) {
+      toolbar.querySelector('#collapseAll')?.addEventListener('click', ()=>{
+        document.querySelectorAll('.section').forEach((sec, i)=>{
+          const h2 = sec.querySelector(':scope > h2'); if (!h2) return;
+          sec.classList.add('is-collapsed');
+          h2.setAttribute('aria-expanded','false');
+          const key = 'coll:' + (h2.textContent.trim() || i);
+          localStorage.setItem(key, '0');
+        });
+      });
+      toolbar.querySelector('#expandAll')?.addEventListener('click', ()=>{
+        document.querySelectorAll('.section').forEach((sec, i)=>{
+          const h2 = sec.querySelector(':scope > h2'); if (!h2) return;
+          sec.classList.remove('is-collapsed');
+          h2.setAttribute('aria-expanded','true');
+          const key = 'coll:' + (h2.textContent.trim() || i);
+          localStorage.setItem(key, '1');
+        });
+      });
+    }
   })();
   </script>
 </body>
