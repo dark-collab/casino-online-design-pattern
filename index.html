@@ -9,25 +9,31 @@
       /* Config inicial borders */
       --surface-border-color: #333; /* igual que --color-mid, en HEX para el color picker */
       --surface-border-width: 1px;
-      /* Colores Identidad principal */
-      --color-brand-bg: #1a1a1a; /* Fondo global */
-      --color-brand-surface: #333; /* Superficies, tarjetas */
-      --color-white: #FFFFFF; /* color de uso general */
-      --color-black: #000000; /* color de uso general */
+      --surface-border-color-v2: #464a58;   /* Borde v2 */
+      --surface-border-width-v2: 1px;       /* Grosor v2 */
+
+      /* Colores Identidad principal (V1 por defecto) */
+      --color-brand-bg: #1a1a1a;      /* Fondo global */
+      --color-brand-surface: #333;     /* Superficies, tarjetas */
+      --color-brand-bg-v2: #1C2233;         /* Fondo global v2 */
+      --color-brand-surface-v2: #464a58;    /* Superficies v2 */
+      --color-white: #FFFFFF;          /* color de uso general */
+      --color-black: #000000;          /* color de uso general */
 
       /* Oro */
-      --color-gold: #ff9500; /* Dorado principal */
+      --color-gold: #ff9500;     /* Dorado principal */
+      --color-gold-v2: #ffc800;             /* Dorado v2 */
       --color-gold-600: #ce7700; /* Dorado intenso */
       --color-gold-700: #b96b00; /* Dorado oscuro */
       --color-gold-800: #a35d00; /* Dorado profundo */
 
-      /* Secundarios / soporte / solidos */
+      /* Secundarios / soporte */
       --color-muted: #A1A1A1; /* Texto secundario */
-      --color-mid: #2B2B2B; /* Bordes sutiles */
+      --color-mid: #2B2B2B;   /* Bordes sutiles */
       --color-green: #0bb552; /* CTA/éxito */
-      --color-blue: #2563EB; /* Info/links */
-      --color-purple: #9333EA; /* VIP */
-      --color-red: #DC2626; /* Error */
+      --color-blue: #2563EB;  /* Info/links */
+      --color-purple: #9333EA;/* VIP */
+      --color-red: #DC2626;   /* Error */
 
       /* Gradientes Oro actuales */
       --grad-gold: linear-gradient(90deg,#C08400,#FACC15);
@@ -42,13 +48,12 @@
 
       /* Tipografía – tokens */
       --font-heading: "Alan Sans", ui-sans-serif, system-ui; /* encabezados / titulos */
-      --font-ui: "Poppins", ui-sans-serif, system-ui; /* general */
-      --font-deco: "Bebas Neue", cursive; /* decorativa / promociones / numeros */
+      --font-ui: "Poppins", ui-sans-serif, system-ui;       /* general */
+      --font-deco: "Oswald", cursive;                       /* decorativa */
       --fw-heading: 800; /* 700/800 sugerido */
       --fw-body: 400;    /* 400/500/600/700 */
-      --lh-heading: 1.15; /* LH = line-height */
+      --lh-heading: 1.15;/* line-height */
       --lh-body: 1.5;
-      /* Escala (Desktop / Mobile) */
       --fs-h1-d: 56px; --fs-h1-m: 34px; /* 52–60 / 32–36 */
       --fs-h2-d: 36px; --fs-h2-m: 26px; /* 32–40 / 24–28 */
       --fs-h3-d: 26px; --fs-h3-m: 19px; /* 24–28 / 18–20 */
@@ -61,6 +66,65 @@
       --gap: 14px;
       --shadow: 0 14px 28px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.35);
       --shadow-soft: 0 10px 18px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.35);
+    }
+
+    /* ——— Tokens V2 ——— */
+    :root{
+      --color-brand-bg-v2: #1C2233;         /* Fondo global v2 */
+      --color-brand-surface-v2: #464a58;    /* Superficies v2 */
+      --surface-border-color-v2: #464a58;   /* Borde v2 */
+      --surface-border-width-v2: 1px;       /* Grosor v2 */
+      --color-gold-v2: #ffc800;             /* Dorado v2 */
+    }
+
+    /* ——— Scope que “activa” V2 remapeando a los tokens base ——— */
+    .theme-v2{
+      --color-brand-bg:        var(--color-brand-bg-v2);
+      --color-brand-surface:   var(--color-brand-surface-v2);
+      --surface-border-color:  var(--surface-border-color-v2);
+      --surface-border-width:  var(--surface-border-width-v2);
+      --color-gold:            var(--color-gold-v2);
+    }
+
+    /* ——— Estilos de la comparativa ——— */
+    .compare-grid{ display:grid; grid-template-columns: 1fr; gap: var(--gap, 14px); }
+    @media (min-width: 900px){ .compare-grid{ grid-template-columns: 1fr 1fr; } }
+    .compare-col .label{ font-size:12px; color: var(--color-muted); margin-bottom:6px; }
+    .mini-page{
+      background: var(--color-brand-bg);
+      border-radius: 14px;
+      padding: 12px;
+      box-shadow: var(--shadow-soft);
+      border: var(--surface-border-width) solid color-mix(in srgb, var(--surface-border-color) 70%, transparent);
+    }
+    .mini-h2{
+      margin: 0 0 10px;
+      font-family: var(--font-heading);
+      font-weight: var(--fw-heading, 800);
+      font-size: clamp(18px, 2.4vw, 22px);
+      line-height: var(--lh-heading, 1.15);
+      color: var(--color-gold);
+      border-bottom: var(--surface-border-width) solid var(--surface-border-color);
+      padding-bottom: 6px;
+    }
+    .mini-row{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 640px){ .mini-row{ grid-template-columns: 1fr 1fr; } }
+    .mini-card{
+      background: var(--color-brand-surface);
+      border: var(--surface-border-width) solid var(--surface-border-color);
+      border-radius: 12px; padding: 12px;
+    }
+    .mini-card .soft{ color: var(--color-muted); font-size:12px; }
+    .mini-input{
+      width:100%; margin-top:8px; background:#0f0f0f; color:var(--color-white);
+      border: var(--surface-border-width) solid var(--surface-border-color);
+      border-radius:8px; padding:10px 12px;
+    }
+    .mini-input::placeholder{ color:#9aa0a6; }
+    .mini-badge{
+      display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px;
+      font-weight:800; color:#fff; background: var(--grad-gold-intense);
+      border: var(--surface-border-width) solid var(--surface-border-color);
     }
 
     /* Global layout helpers */
@@ -89,7 +153,8 @@
 
     .grid{display:grid; grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); gap: var(--gap);}
 
-    .card{background: var(--color-brand-surface); border: 1px solid var(--color-mid); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-soft)}
+    /* 🔁 A partir de aquí, todos los bordes usan las vars globales */
+    .card{background: var(--color-brand-surface); border: var(--surface-border-width) solid var(--surface-border-color); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-soft)}
     .swatch{height:110px; display:flex; align-items:flex-end; justify-content:space-between; padding:10px}
     .content{padding: 14px 14px 12px;}
     .token{font-weight:800; font-size:14px}
@@ -98,13 +163,13 @@
     .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
 
     .btn{appearance:none; border:0; border-radius: 10px; padding:10px 12px; cursor:pointer; font-weight:800; text-transform: uppercase}
-    .btn.copy{background:#0f0f0f; color:var(--color-muted); border:1px solid var(--color-mid)}
+    .btn.copy{background:#0f0f0f; color:var(--color-muted); border: var(--surface-border-width) solid var(--surface-border-color)}
     .btn.copy:hover{filter: brightness(1.08)}
 
     /* Playground */
-    .panel{background: var(--color-brand-bg); padding:16px; border-radius: var(--radius-lg); border:1px solid var(--color-mid)}
+    .panel{background: var(--color-brand-surface); padding:16px; border-radius: var(--radius-lg); border: var(--surface-border-width) solid var(--surface-border-color)}
     .soft{color: var(--color-muted)}
-    .input{width:100%; background:#0f0f0f; color:var(--color-white); border:1px solid var(--color-mid); padding:10px 12px; border-radius:10px}
+    .input{width:100%; background:#0f0f0f; color:var(--color-white); border: var(--surface-border-width) solid var(--surface-border-color); padding:10px 12px; border-radius:10px}
     .input::placeholder{color:#7d7d7d}
 
     .cta{background: var(--grad-gold); color:#120d00; box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset; font-family: var(--font-ui); font-weight: 800}
@@ -113,18 +178,18 @@
     .link{font-weight:800; text-decoration:none; background: var(--grad-gold-soft); -webkit-background-clip:text; background-clip:text; color:transparent}
     .link:hover{text-decoration:underline}
 
-    .badge{display:inline-block; font-weight:900; padding:6px 10px; border-radius:999px; background: var(--grad-gold-intense); color:#fff; border:1px solid rgba(255,255,255,.06)}
+    .badge{display:inline-block; font-weight:900; padding:6px 10px; border-radius:999px; background: var(--grad-gold-intense); color:#fff; border: var(--surface-border-width) solid var(--surface-border-color)}
 
     .alert{border-left: 6px solid var(--color-red); background: #2a1212; color:#ffdede; padding:12px; border-radius: var(--radius-md)}
 
-    .card-demo{background:#0f0f0f; border:1px solid var(--color-mid); border-radius: var(--radius-lg); overflow:hidden}
+    .card-demo{background:#0f0f0f; border: var(--surface-border-width) solid var(--surface-border-color); border-radius: var(--radius-lg); overflow:hidden}
     .card-demo .head{height:90px; background: var(--grad-gold-angled)}
     .card-demo .body{padding:12px}
 
     .money{margin-top:8px; font-size:24px; font-weight:900; background: var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent}
 
     /* Gradient cards */
-    .g{height:100px; border-radius: var(--radius-lg); box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.06)}
+    .g{height:100px; border-radius: var(--radius-lg); box-shadow: var(--shadow); border: var(--surface-border-width) solid var(--surface-border-color)}
     .g.gold{background: var(--grad-gold)}
     .g.gold-soft{background: var(--grad-gold-soft)}
     .g.gold-angled{background: var(--grad-gold-angled)}
@@ -133,7 +198,7 @@
     .g.blue{background: var(--grad-blue)}
     .g.purple{background: var(--grad-purple)}
 
-    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#0f0f0f; border:1px solid var(--color-mid); padding:2px 6px; border-radius:6px; font-size:12px}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#0f0f0f; border: var(--surface-border-width) solid var(--surface-border-color); padding:2px 6px; border-radius:6px; font-size:12px}
 
     .footer{margin:40px 0 20px; text-align:center; color: var(--color-muted); font-size:12px}
 
@@ -160,97 +225,32 @@
     /* Accesibilidad */
     :focus-visible{ outline: 2px dashed var(--color-gold); outline-offset: 3px; }
 
-    /* Icon grid */
-    .icons-grid {
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
-    .icon-card {
-      background: var(--color-brand-surface);
-      border: 1px solid var(--color-mid);
-      border-radius: 12px;
-      padding: 12px;
-      display: grid;
-      grid-template-rows: 1fr auto auto;
-      gap: 8px;
-      cursor: pointer;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-    }
-    .icon-card:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-soft);
-      border-color: var(--color-gold-700, var(--color-gold));
-    }
-    .icon-preview {
-      display:flex; align-items:center; justify-content:center;
-      min-height:56px; font-size:28px; color:#fff;
-    }
+    /* Icon grid (si la usas) */
+    .icons-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+    .icon-card { background: var(--color-brand-surface); border: var(--surface-border-width) solid var(--surface-border-color); border-radius: 12px; padding: 12px; display: grid; grid-template-rows: 1fr auto auto; gap: 8px; cursor: pointer; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+    .icon-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); border-color: var(--color-gold-700, var(--color-gold)); }
+    .icon-preview { display:flex; align-items:center; justify-content:center; min-height:56px; font-size:28px; color:#fff; }
     .icon-preview svg { width:28px; height:28px; stroke: currentColor; }
-    .icon-name {
-      font-size:12px; color: var(--color-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .icon-snippet {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size:11px; color:#ddd; background:#0f0f0f; border:1px solid var(--color-mid);
-      border-radius:6px; padding:4px 6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-
+    .icon-name { font-size:12px; color: var(--color-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .icon-snippet { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:11px; color:#ddd; background:#0f0f0f; border: var(--surface-border-width) solid var(--surface-border-color); border-radius:6px; padding:4px 6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .icons-selected-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-top: 15px; }
-
-    .icon-picked {
-      background: var(--color-brand-surface);
-      border: 1px solid var(--color-mid);
-      border-radius: 12px;
-      padding: 10px;
-      display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 6px;
-    }
-
-    .icon-picked .preview {
-      display:flex; align-items:center; justify-content:center;
-      min-height:48px; font-size:28px; color:#fff;
-    }
+    .icon-picked { background: var(--color-brand-surface); border: var(--surface-border-width) solid var(--surface-border-color); border-radius: 12px; padding: 10px; display: grid; grid-template-rows: auto auto 1fr; gap: 6px; }
+    .icon-picked .preview { display:flex; align-items:center; justify-content:center; min-height:48px; font-size:28px; color:#fff; }
     .icon-picked .preview svg { width:28px; height:28px; stroke: currentColor; }
-
-    .icon-picked .name {
-      font-size:12px; color: var(--color-muted);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
+    .icon-picked .name { font-size:12px; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .icon-picked .row { margin-top: 0; }
-
-    .icon-card.selected {
-      outline: 2px solid var(--color-gold-700, var(--color-gold));
-      outline-offset: 2px;
-    }
-
+    .icon-card.selected { outline: 2px solid var(--color-gold-700, var(--color-gold)); outline-offset: 2px; }
     .preview-card i { vertical-align: -2px; }
-    .preview-card i, .preview-card svg {
-      color: var(--preview-icon-color, #fff);
-      stroke: var(--preview-icon-color, #fff);
-      width: var(--preview-icon-size, 24px);
-      height: var(--preview-icon-size, 24px);
-      font-size: var(--preview-icon-size, 24px);
-    }
+    .preview-card i, .preview-card svg { color: var(--preview-icon-color, #fff); stroke: var(--preview-icon-color, #fff); width: var(--preview-icon-size, 24px); height: var(--preview-icon-size, 24px); font-size: var(--preview-icon-size, 24px); }
+
     /* Secciones colapsables */
-    .section h2{
-      display:flex; align-items:center; gap:8px;
-      cursor:pointer; user-select:none;
-    }
-    .section h2 .caret{
-      display:inline-block; font-size:14px;
-      color: var(--color-muted); transition: transform .15s ease;
-    }
+    .section h2{ display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none; }
+    .section h2 .caret{ display:inline-block; font-size:14px; color: var(--color-muted); transition: transform .15s ease; }
     .section.is-collapsed h2 .caret{ transform: rotate(-90deg); }
-
-    /* Oculta TODO menos el h2 cuando está colapsada */
     .section.is-collapsed > :not(h2){ display:none !important; }
+  .section h2:focus-visible{ outline: 2px dashed var(--color-gold); outline-offset: 4px; }
+</style>
 
-    /* Accesibilidad al enfocarlo con teclado */
-    .section h2:focus-visible{
-      outline: 2px dashed var(--color-gold); outline-offset: 4px;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -260,6 +260,149 @@
       <button class="btn secondary" id="collapseAll">Colapsar todo</button>
       <button class="btn cta" id="expandAll">Expandir todo</button>
     </div>
+    <div class="tuner-actions" id="themeVersionSwitch" style="margin:8px 0 18px">
+      <label class="soft" style="display:flex; align-items:center; gap:10px">
+        <span>Tema global:</span>
+        <label><input type="radio" name="themeVer" value="v1" checked> V1</label>
+        <label><input type="radio" name="themeVer" value="v2"> V2</label>
+      </label>
+    </div>
+
+    <!-- Tipografía -->
+    <div class="section">
+      <h2>Tipografía (Google Fonts)</h2>
+      <div class="grid">
+        <div class="panel">
+          <div class="soft">Vista previa</div>
+          <h1 class="demo">H1 (Hero / Promo) – ¡Gana en grande!</h1>
+          <h2 class="demo">H2 (Sección) – Próximos eventos</h2>
+          <h3 class="demo">H3 (Tarjeta) – Jackpot semanal</h3>
+          <p class="demo">Body – Montserrat Regular. Este texto sirve para evaluar legibilidad en UI (mínimo 16px, alto contraste, <em>focus visible</em>).</p>
+          <div class="banner-deco" aria-label="Decorativa">Campaña exclusiva • Bono Dorado •  +400 -200</div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn cta">CTA / Botón</button>
+            <a href="#" class="link">Link de prueba</a>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="soft">Escala sugerida</div>
+          <div style="overflow:auto">
+            <table style="width:100%; border-collapse:collapse; font-size:13px">
+              <thead>
+                <tr style="color:var(--color-muted)">
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Elemento</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Familia / Peso</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Desktop</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Mobile</th>
+                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Nota</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:6px">H1 (Hero/Promo)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">52–60px</td><td style="padding:6px">32–36px</td><td style="padding:6px">LH 1.1–1.2</td></tr>
+                <tr><td style="padding:6px">H2 (Sección)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">32–40px</td><td style="padding:6px">24–28px</td><td style="padding:6px"></td></tr>
+                <tr><td style="padding:6px">H3 (Tarjeta)</td><td style="padding:6px">Alan Sans <strong>SemiBold</strong></td><td style="padding:6px">24–28px</td><td style="padding:6px">18–20px</td><td style="padding:6px"></td></tr>
+                <tr><td style="padding:6px">Body</td><td style="padding:6px">Poppins <strong>Regular</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">14–16px</td><td style="padding:6px"><strong>LH 1.5</strong></td></tr>
+                <tr><td style="padding:6px">CTA/Botón</td><td style="padding:6px">Poppins <strong>Bold</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">16–18px</td><td style="padding:6px">MAYÚSCULAS</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="soft" style="margin-top:8px">*Puedes alternar entre vista <span class="kbd">desktop</span> y <span class="kbd">mobile</span> para ver el efecto.</div>
+        </div>
+      </div>
+
+      <!-- Typo Tuner -->
+      <div class="tuner-grid" style="margin-top:10px">
+        <div class="tuner-item">
+          <label>Familia encabezados (Heading)</label>
+          <div class="tuner-row">
+            <input list="font-suggestions" id="fontHeading" class="tuner-text" value="Alan Sans" />
+            <select id="fwHeading" class="tuner-text">
+              <option value="700">700</option>
+              <option value="800" selected>800</option>
+            </select>
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Familia UI / Body</label>
+          <div class="tuner-row">
+            <input list="font-suggestions" id="fontBody" class="tuner-text" value="Poppins" />
+            <select id="fwBody" class="tuner-text">
+              <option value="400" selected>400</option>
+              <option value="500">500</option>
+              <option value="600">600</option>
+              <option value="700">700</option>
+            </select>
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Decorativa (campañas)</label>
+          <div class="tuner-row">
+            <input list="font-suggestions" id="fontDeco" class="tuner-text" value="Oswald" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Line-height (LH) encabezados / body</label>
+          <div class="tuner-row">
+            <input type="text" id="lhHeading" class="tuner-text" value="1.15" />
+            <input type="text" id="lhBody" class="tuner-text" value="1.5" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Tamaños Desktop (H1/H2/H3/Body)</label>
+          <div class="tuner-row">
+            <input type="text" id="fsH1D" class="tuner-text" value="56px" />
+            <input type="text" id="fsH2D" class="tuner-text" value="36px" />
+            <input type="text" id="fsH3D" class="tuner-text" value="26px" />
+            <input type="text" id="fsBodyD" class="tuner-text" value="17px" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Tamaños Mobile (H1/H2/H3/Body)</label>
+          <div class="tuner-row">
+            <input type="text" id="fsH1M" class="tuner-text" value="34px" />
+            <input type="text" id="fsH2M" class="tuner-text" value="26px" />
+            <input type="text" id="fsH3M" class="tuner-text" value="19px" />
+            <input type="text" id="fsBodyM" class="tuner-text" value="15px" />
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Vista previa</label>
+          <div class="tuner-row">
+            <select id="vwSwitch" class="tuner-text">
+              <option value="desktop" selected>Desktop</option>
+              <option value="mobile">Mobile</option>
+            </select>
+            <button class="btn secondary" id="applyRecommended">Aplicar escala sugerida</button>
+          </div>
+        </div>
+        <div class="tuner-item">
+          <label>Añadir familia personalizada (Google Fonts)</label>
+          <div class="tuner-row">
+            <input type="text" id="customFamily" class="tuner-text" placeholder="Ej: Poppins" />
+            <input type="text" id="customWeights" class="tuner-text" placeholder="Pesos: 400;500;700" />
+            <button class="btn secondary" id="addFamily">Añadir</button>
+          </div>
+        </div>
+      </div>
+      <div class="tuner-actions">
+        <button class="btn secondary" id="resetFonts">Restablecer tipografías</button>
+        <button class="btn cta" id="exportCSS">Exportar CSS</button>
+      </div>
+
+      <datalist id="font-suggestions">
+        <option value="Alan Sans"></option>
+        <option value="Montserrat"></option>
+        <option value="Solitreo"></option>
+        <option value="Iansui"></option>
+        <option value="Alumni Sans"></option>
+        <option value="Bebas Neue"></option>
+        <option value="Oswald"></option>
+        <option value="Poppins"></option>
+        <option value="Inter"></option>
+        <option value="Roboto"></option>
+      </datalist>
+    </div>
+
     <!-- Swatches -->
     <div class="section">
       <h2>Tokens de color</h2>
@@ -367,141 +510,6 @@
       </div>
     </div>
 
-    <!-- Tipografía -->
-    <div class="section">
-      <h2>Tipografía (Google Fonts)</h2>
-      <div class="grid">
-        <div class="panel">
-          <div class="soft">Vista previa</div>
-          <h1 class="demo">H1 (Hero / Promo) – ¡Gana en grande!</h1>
-          <h2 class="demo">H2 (Sección) – Próximos eventos</h2>
-          <h3 class="demo">H3 (Tarjeta) – Jackpot semanal</h3>
-          <p class="demo">Body – Montserrat Regular. Este texto sirve para evaluar legibilidad en UI (mínimo 16px, alto contraste, <em>focus visible</em>).</p>
-          <div class="banner-deco" aria-label="Decorativa">Campaña exclusiva • Bono Dorado •  +400 -200</div>
-          <div class="row" style="margin-top:10px">
-            <button class="btn cta">CTA / Botón</button>
-            <a href="#" class="link">Link de prueba</a>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="soft">Escala sugerida</div>
-          <div style="overflow:auto">
-            <table style="width:100%; border-collapse:collapse; font-size:13px">
-              <thead>
-                <tr style="color:var(--color-muted)">
-                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Elemento</th>
-                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Familia / Peso</th>
-                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Desktop</th>
-                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Mobile</th>
-                  <th style="text-align:left; padding:6px; border-bottom:1px solid var(--color-mid)">Nota</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style="padding:6px">H1 (Hero/Promo)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">52–60px</td><td style="padding:6px">32–36px</td><td style="padding:6px">LH 1.1–1.2</td></tr>
-                <tr><td style="padding:6px">H2 (Sección)</td><td style="padding:6px">Alan Sans <strong>Bold</strong></td><td style="padding:6px">32–40px</td><td style="padding:6px">24–28px</td><td style="padding:6px"></td></tr>
-                <tr><td style="padding:6px">H3 (Tarjeta)</td><td style="padding:6px">Alan Sans <strong>SemiBold</strong></td><td style="padding:6px">24–28px</td><td style="padding:6px">18–20px</td><td style="padding:6px"></td></tr>
-                <tr><td style="padding:6px">Body</td><td style="padding:6px">Poppins <strong>Regular</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">14–16px</td><td style="padding:6px"><strong>LH 1.5</strong></td></tr>
-                <tr><td style="padding:6px">CTA/Botón</td><td style="padding:6px">Poppins <strong>Bold</strong></td><td style="padding:6px">16–18px</td><td style="padding:6px">16–18px</td><td style="padding:6px">MAYÚSCULAS</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="soft" style="margin-top:8px">*Puedes alternar entre vista <span class="kbd">desktop</span> y <span class="kbd">mobile</span> para ver el efecto.</div>
-        </div>
-      </div>
-
-      <!-- Typo Tuner -->
-      <div class="tuner-grid" style="margin-top:10px">
-        <div class="tuner-item">
-          <label>Familia encabezados (Heading)</label>
-          <div class="tuner-row">
-            <input list="font-suggestions" id="fontHeading" class="tuner-text" value="Alan Sans" />
-            <select id="fwHeading" class="tuner-text">
-              <option value="700">700</option>
-              <option value="800" selected>800</option>
-            </select>
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Familia UI / Body</label>
-          <div class="tuner-row">
-            <input list="font-suggestions" id="fontBody" class="tuner-text" value="Poppins" />
-            <select id="fwBody" class="tuner-text">
-              <option value="400" selected>400</option>
-              <option value="500">500</option>
-              <option value="600">600</option>
-              <option value="700">700</option>
-            </select>
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Decorativa (campañas)</label>
-          <div class="tuner-row">
-            <input list="font-suggestions" id="fontDeco" class="tuner-text" value="Bebas Neue" />
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Line-height (LH) encabezados / body</label>
-          <div class="tuner-row">
-            <input type="text" id="lhHeading" class="tuner-text" value="1.15" />
-            <input type="text" id="lhBody" class="tuner-text" value="1.5" />
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Tamaños Desktop (H1/H2/H3/Body)</label>
-          <div class="tuner-row">
-            <input type="text" id="fsH1D" class="tuner-text" value="56px" />
-            <input type="text" id="fsH2D" class="tuner-text" value="36px" />
-            <input type="text" id="fsH3D" class="tuner-text" value="26px" />
-            <input type="text" id="fsBodyD" class="tuner-text" value="17px" />
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Tamaños Mobile (H1/H2/H3/Body)</label>
-          <div class="tuner-row">
-            <input type="text" id="fsH1M" class="tuner-text" value="34px" />
-            <input type="text" id="fsH2M" class="tuner-text" value="26px" />
-            <input type="text" id="fsH3M" class="tuner-text" value="19px" />
-            <input type="text" id="fsBodyM" class="tuner-text" value="15px" />
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Vista previa</label>
-          <div class="tuner-row">
-            <select id="vwSwitch" class="tuner-text">
-              <option value="desktop" selected>Desktop</option>
-              <option value="mobile">Mobile</option>
-            </select>
-            <button class="btn secondary" id="applyRecommended">Aplicar escala sugerida</button>
-          </div>
-        </div>
-        <div class="tuner-item">
-          <label>Añadir familia personalizada (Google Fonts)</label>
-          <div class="tuner-row">
-            <input type="text" id="customFamily" class="tuner-text" placeholder="Ej: Poppins" />
-            <input type="text" id="customWeights" class="tuner-text" placeholder="Pesos: 400;500;700" />
-            <button class="btn secondary" id="addFamily">Añadir</button>
-          </div>
-        </div>
-      </div>
-      <div class="tuner-actions">
-        <button class="btn secondary" id="resetFonts">Restablecer tipografías</button>
-        <button class="btn cta" id="exportCSS">Exportar CSS</button>
-      </div>
-
-      <datalist id="font-suggestions">
-        <option value="Alan Sans"></option>
-        <option value="Montserrat"></option>
-        <option value="Solitreo"></option>
-        <option value="Iansui"></option>
-        <option value="Alumni Sans"></option>
-        <option value="Bebas Neue"></option>
-        <option value="Oswald"></option>
-        <option value="Poppins"></option>
-        <option value="Inter"></option>
-        <option value="Roboto"></option>
-      </datalist>
-    </div>
-
     <!-- Playground / usage examples -->
     <div class="section">
       <h2>Ejemplos de uso</h2>
@@ -531,6 +539,63 @@
               <div style="font-weight:900; letter-spacing:.3px; font-family: var(--font-heading); line-height: var(--lh-heading); font-size: var(--fs-h2)">Jackpot Semanal</div>
               <div class="soft" style="font-family: var(--font-ui); line-height: var(--lh-body); font-size: var(--fs-body)">Premio acumulado</div>
               <div class="money">$1,250,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparativa V1 vs V2 -->
+    <div class="section" id="compare-v1-v2">
+      <h2>Comparativa V1 vs V2 (background, tarjetas, bordes y H2)</h2>
+
+      <div class="compare-grid">
+        <!-- Columna V1 (usa tus tokens actuales por defecto) -->
+        <div class="compare-col">
+          <div class="label">V1 (actual)</div>
+          <div class="mini-page">
+            <div class="mini-h2">Sección destacada</div>
+
+            <div class="mini-row">
+              <div class="mini-card">
+                <div class="soft">Tarjeta</div>
+                <p style="margin:6px 0 10px">Texto de ejemplo en superficie V1.</p>
+                <input class="mini-input" placeholder="Placeholder (V1)" />
+                <span class="mini-badge">VIP</span>
+              </div>
+
+              <div class="mini-card">
+                <div class="soft">CTA & Enlaces</div>
+                <div class="row" style="margin-top:8px">
+                  <button class="btn cta">Depositar</button>
+                  <a href="#" class="link">Ver evento</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna V2 (activa el scope que remapea tokens) -->
+        <div class="compare-col theme-v2">
+          <div class="label">V2 (propuesta)</div>
+          <div class="mini-page">
+            <div class="mini-h2">Sección destacada</div>
+
+            <div class="mini-row">
+              <div class="mini-card">
+                <div class="soft">Tarjeta</div>
+                <p style="margin:6px 0 10px">Texto de ejemplo en superficie V2.</p>
+                <input class="mini-input" placeholder="Placeholder (V2)" />
+                <span class="mini-badge">VIP</span>
+              </div>
+
+              <div class="mini-card">
+                <div class="soft">CTA & Enlaces</div>
+                <div class="row" style="margin-top:8px">
+                  <button class="btn cta">Depositar</button>
+                  <a href="#" class="link">Ver evento</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -571,8 +636,11 @@
     const TOKENS = [
       { name: '--color-brand-bg', usage: 'Fondo global' },
       { name: '--color-brand-surface', usage: 'Superficies / paneles' },
+      { name: '--color-brand-bg-v2', usage: 'Fondo global' },
+      { name: '--color-brand-surface-v2', usage: 'Superficies / paneles' },
       { name: '--color-white', usage: 'Texto primario' },
       { name: '--color-gold', usage: 'Dorado principal' },
+      { name: '--color-gold-v2', usage: 'Dorado principal' },
       { name: '--color-gold-600', usage: 'Dorado intenso' },
       { name: '--color-gold-700', usage: 'Dorado oscuro' },
       { name: '--color-gold-800', usage: 'Dorado profundo' },
@@ -641,7 +709,7 @@
       { name: '--surface-border-width', kind: 'length', default: '1px' }
     ];
 
-    const initialTheme = {};
+    let initialTheme = {};
     [...colorVars, ...gradientVars, ...borderVars.map(b=>b.name)].forEach(v => {
       const def = borderVars.find(b => b.name === v)?.default;
       const val = cssVar(v);
@@ -867,7 +935,7 @@
     const fonts = new Map([
       ['Alan Sans', new Set([700,800])],
       ['Poppins', new Set([400,500,600,700])],
-      ['Bebas Neue', new Set()],
+      ['Oswald', new Set()],
       ['Iansui', new Set()],
     ]);
 
@@ -929,7 +997,7 @@
     const initialFonts = {
       heading: 'Alan Sans',   fwHeading: '800',
       body: 'Poppins',     fwBody: '400',
-      deco: 'Bebas Neue',
+      deco: 'Oswald',
       lhHeading: '1.15',      lhBody: '1.5',
       fsH1D: '56px', fsH1M: '34px',
       fsH2D: '36px', fsH2M: '26px',
@@ -962,7 +1030,7 @@
       fonts.clear();
       fonts.set('Alan Sans',  new Set([700,800]));
       fonts.set('Poppins', new Set([400,500,600,700]));
-      fonts.set('Bebas Neue',   new Set());
+      fonts.set('Oswald',   new Set());
       fonts.set('Iansui',     new Set());
 
       ensureGFontsLink();
@@ -1026,7 +1094,7 @@
     document.documentElement.setAttribute('data-vw','desktop');
     addOrUpdateFamily('Alan Sans', [700,800]);
     addOrUpdateFamily('Poppins', [400,500,600,700]);
-    addOrUpdateFamily('Bebas Neue', []);
+    addOrUpdateFamily('Oswald', []);
     addOrUpdateFamily('Iansui', []);
     ensureGFontsLink();
     applyFontVars();
@@ -1382,6 +1450,41 @@
       });
     }
   })();
+  </script>
+  <script>
+    // ===== Switch V1/V2 global =====
+    (function(){
+      const KEY = 'themeVersion';
+      const radios = document.querySelectorAll('input[name="themeVer"]');
+
+      function applyTheme(ver){
+        document.body.classList.toggle('theme-v2', ver === 'v2');
+        localStorage.setItem(KEY, ver);
+        // refresca UI derivada
+        if (typeof renderSwatches === 'function') renderSwatches();
+        if (typeof renderColorTuner === 'function') renderColorTuner();
+
+        // (opcional) si tu botón "Restablecer" usa un snapshot inicial y quieres
+        // que tome el del tema actual, cambia tu "const initialTheme" a "let initialTheme"
+        // y vuelve a capturarlo aquí:
+        if (typeof cssVar === 'function') {
+          initialTheme = {};
+          [...colorVars, ...gradientVars].forEach(v => initialTheme[v] = cssVar(v));
+        }
+      }
+
+      // carga estado guardado
+      const saved = localStorage.getItem(KEY) || 'v1';
+      applyTheme(saved);
+      // marca el radio correcto
+      const current = document.querySelector(`input[name="themeVer"][value="${saved}"]`);
+      if (current) current.checked = true;
+
+      // listeners
+      radios.forEach(r => {
+        r.addEventListener('change', () => applyTheme(r.value));
+      });
+    })();
   </script>
 </body>
 </html>
